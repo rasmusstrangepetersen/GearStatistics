@@ -683,7 +683,7 @@ end
 -- DESC : Show WorldMapToolTip
 -- **************************************************************************
 function GS_WorldMapTooltip_OnShow(tooltip, ...)
-  GS_Debug("show WorldMap tooltip", 1)
+  GS_Debug("show WorldMap tooltip", 0)
 
  -- GS_WorldMapTooltip_OnGameTooltipSetItem(tooltip);
   tooltip:AddDoubleLine(" ", "test");
@@ -694,7 +694,7 @@ end
 -- DESC : Clear GameToolTip
 -- **************************************************************************
 function GS_WorldMapTooltip_OnHide(tooltip, ...)
-  GS_Debug("clear WorldMap tooltip", 1)
+  GS_Debug("clear WorldMap tooltip", 0)
 
   GS_ResetTooltip();
 end
@@ -703,7 +703,7 @@ end
 -- DESC : Add GearStatistics values to the GameToolTip
 -- **************************************************************************
 function GS_WorldMapTooltip_OnGameTooltipSetItem(tooltip, ...)
-  GS_Debug("entering set item WorldMap tooltip", 1)
+  GS_Debug("entering set item WorldMap tooltip", 0)
 
   if (lastWorldMapTooltipText == "") then
     GS_Debug("set item tooltip", 0)

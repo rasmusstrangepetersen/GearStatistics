@@ -1,5 +1,5 @@
 -- *** Version information
-GS_VERSION = "8.2.1";
+GS_VERSION = "8.2.2";
 
 -- *** Used colors ***
 GS_colorRed    = "ffff0000"; -- red DEBUG text color and red gear (best)
@@ -685,8 +685,6 @@ end
 function GS_WorldMapTooltip_OnShow(tooltip, ...)
   GS_Debug("show WorldMap tooltip", 0)
 
- -- GS_WorldMapTooltip_OnGameTooltipSetItem(tooltip);
-  tooltip:AddDoubleLine(" ", "test");
   tooltip:Show()
 end
 
@@ -724,11 +722,11 @@ function GS_WorldMapTooltip_OnGameTooltipSetItem(tooltip, ...)
      
         -- only show tooltip, if success in getting text
         lastWorldMapTooltipText = text;
-        tooltip:AddDoubleLine(" ", lastWorldMapTooltipText);
+        tooltip:AddLine(" ", lastWorldMapTooltipText);
       end
     end
   else
-    tooltip:AddDoubleLine(" ", lastWorldMapTooltipText);
+    tooltip:AddLine(" ", lastWorldMapTooltipText);
   end
 end
 

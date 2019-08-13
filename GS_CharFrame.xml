@@ -1,0 +1,210 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Script file="GS_CharFrame.lua"/>
+	
+	<Frame name="GS_CharFrame" toplevel="true" movable="true" hidden="true" enableMouse="true" parent="UIParent" enableKeyboard="false">
+		<Size>
+			<AbsDimension x="384" y="512"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="512" y="-104"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<HitRectInsets>
+			<AbsInset left="0" right="30" top="0" bottom="45"/>
+		</HitRectInsets>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="GS_CharFramePaperDollFramePortrait">
+					<Size>
+						<AbsDimension x="58" y="58"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="12" y="-8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture urgency="5" file="Interface\PaperDollInfoFrame\UI-Character-General-TopLeft">
+					<Size>
+						<AbsDimension x="256" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture urgency="5" file="Interface\PaperDollInfoFrame\UI-Character-General-TopRight">
+					<Size>
+						<AbsDimension x="128" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="256" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture urgency="5" file="Interface\PaperDollInfoFrame\SkillFrame-BotLeft">
+					<Size>
+						<AbsDimension x="256" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="0" y="-256"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture urgency="5" file="Interface\PaperDollInfoFrame\SkillFrame-BotRight">
+					<Size>
+						<AbsDimension x="128" y="256"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="256" y="-256"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="GS_CharFrameDressUpFrameTitleText" inherits="GameFontHighlight" text="GS_CHARFRAME_PLAYERNAME">
+					<Size>
+						<AbsDimension x="300" y="14"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativePoint="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-16"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="GS_CharFrameDressUpFrameDescriptionText" inherits="GameFontNormalSmall" text="GS_CHARFRAME_LEVELRACECLASS">
+					<Size>
+						<AbsDimension x="260" y="36"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="GS_CharFrameDressUpFrameTitleText" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="GS_CharFrameDressUpFrameGuildText" inherits="GameFontNormalSmall" text="GS_CHARFRAME_GUILD">
+					<Size>
+						<AbsDimension x="260" y="36"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="GS_CharFrameDressUpFrameDescriptionText" relativePoint="BOTTOM"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="GS_CharFrameDressUpBackgroundTopLeft">
+					<Size>
+						<AbsDimension x="256" y="255"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="22" y="-76"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="GS_CharFrameDressUpBackgroundTopRight">
+					<Size>
+						<AbsDimension x="62" y="255"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="GS_CharFrameDressUpBackgroundTopLeft" relativePoint="TOPRIGHT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="GS_CharFrameDressUpBackgroundBotLeft">
+					<Size>
+						<AbsDimension x="256" y="128"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="GS_CharFrameDressUpBackgroundTopLeft" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture name="GS_CharFrameDressUpBackgroundBotRight">
+					<Size>
+						<AbsDimension x="62" y="128"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="GS_CharFrameDressUpBackgroundTopLeft" relativePoint="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+				<FontString name="GS_CharFrameDressUpFrameAverageScore" inherits="GameFontNormal" text="GS_CHARFRAME_AVERAGESCORE">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="CharFrameDressUpFrameGuildText" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-50"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="GS_CharFrameDressUpFrameTotalScore" inherits="GameFontNormal" text="GS_CHARFRAME_TOTALSCORE">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="GS_CharFrameDressUpFrameAverageScore" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-25"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+	        <Button name="GS_CharFrameDressUpFrameCloseButton" inherits="UIPanelCloseButton">
+	            <Anchors>
+	                <Anchor point="CENTER" relativePoint="TOPRIGHT">
+	                    <Offset>
+	                        <AbsDimension x="-46" y="-25"/>
+	                    </Offset>
+	                </Anchor>
+	            </Anchors>
+	        </Button>
+			<Button name="GS_CharFrameDressUpFrameCancelButton" inherits="UIPanelButtonTemplate" text="CLOSE">
+				<Size>
+					<AbsDimension x="80" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="305" y="-422"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick function="HideParentPanel"/>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				self:StartMoving();
+				self.isMoving = true;
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing();
+				self.isMoving = false;
+			</OnDragStop>
+ 		</Scripts>
+	</Frame>
+</Ui> 

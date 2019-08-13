@@ -1,0 +1,205 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Script file="GS_CharFrame.lua"/>
+	
+	<Texture name="PaperDollFrameFlyoutTexture" file="Interface\PaperDollInfoFrame\UI-GearManager-Flyout" hidden="true" virtual="true"/>
+    <ItemButton name="GS_PaperDollItemSlotButtonTemplate" inherits="ItemButtonTemplate" virtual="true">
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentIgnoreTexture" file="Interface\PaperDollInfoFrame\UI-GearManager-LeaveItem-Transparent">
+					<Size x="40" y="40"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture> 
+				<Texture name="$parentBorderTexture" file="Interface\Addons\GearStatistics\Textures\Border">
+					<Size x="41" y="41"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture> 
+				<FontString name="$parentItemScore" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="TOP" x="0" y="-2"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentItemLevel" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="BOTTOM" x="0" y="2"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+    	<Scripts>
+	        <OnLoad>
+				GS_ItemButton_OnLoad(self);
+			</OnLoad>
+            <OnEnter>
+				GS_ItemButton_OnEnter(self, motion);
+			</OnEnter>
+            <OnLeave> 
+				GS_ItemButton_OnLeave(self, motion);
+			</OnLeave> 
+			<OnClick>
+				GS_ItemButton_OnClick(self, button)
+			</OnClick>
+        </Scripts>
+    </ItemButton>
+	<ItemButton name="GS_PaperDollItemSlotButtonLeftTemplate" parentArray="EquipmentSlots" inherits="GS_PaperDollItemSlotButtonTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-1">
+				<Texture name="$parentFrame" inherits="Char-LeftSlot">	
+					<Anchors>
+						<Anchor point="TOPLEFT" x="-4" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</ItemButton>
+	<ItemButton name="GS_PaperDollItemSlotButtonRightTemplate" parentArray="EquipmentSlots" inherits="GS_PaperDollItemSlotButtonTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-1">
+				<Texture name="$parentFrame" inherits="Char-RightSlot">	
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="4" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</ItemButton>
+	<ItemButton name="GS_PaperDollItemSlotButtonBottomTemplate" parentArray="WeaponSlots" inherits="GS_PaperDollItemSlotButtonTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-1">
+				<Texture name="$parentFrame" inherits="Char-BottomSlot">	
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="-4" y="-6"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</ItemButton>
+    <Frame name="GS_PaperDollFrame" setAllPoints="true" enableMouse="true" parent="GS_CharFrame" useParentLevel="true" id="1">
+        <HitRectInsets>
+			<AbsInset left="0" right="30" top="0" bottom="45"/>
+		</HitRectInsets>
+        <Frames>
+			<Frame name="GS_PaperDollItemsFrame" setAllPoints="true">
+				<Frames>
+					<ItemButton name="GS_CharacterHeadSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="22" y="-74"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterNeckSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterHeadSlot" relativePoint="BOTTOMLEFT"  x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterShoulderSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterNeckSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterBackSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterShoulderSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterChestSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterBackSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterShirtSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterChestSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterTabardSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterShirtSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterWristSlot" inherits="GS_PaperDollItemSlotButtonLeftTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterTabardSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterHandsSlot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor  point="TOPLEFT" relativeTo="GS_CharacterHeadSlot" relativePoint="TOPLEFT" x="282" y="0"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterWaistSlot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterHandsSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterLegsSlot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterWaistSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+				 	<ItemButton name="GS_CharacterFeetSlot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterLegsSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+			 		<ItemButton name="GS_CharacterFinger0Slot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterFeetSlot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterFinger1Slot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterFinger0Slot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterTrinket0Slot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterFinger1Slot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterTrinket1Slot" inherits="GS_PaperDollItemSlotButtonRightTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterTrinket0Slot" relativePoint="BOTTOMLEFT" x="0" y="-4"/>
+						</Anchors>
+					</ItemButton>
+					<ItemButton name="GS_CharacterMainHandSlot" inherits="GS_PaperDollItemSlotButtonBottomTemplate">
+						<Anchors>
+							<Anchor point="BOTTOMLEFT" relativeTo="GS_CharacterWristSlot" relativePoint="BOTTOMLEFT" x="120" y="0"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<Texture inherits="Char-Slot-Bottom-Left">
+									<Anchors>
+										<Anchor point="BUTTOMLEFT" relativeTo="GS_CharacterMainHandSlot" relativePoint="BUTTOMRIGHT" x="-10" y="10"/>
+									</Anchors>
+								</Texture>
+							</Layer>
+						</Layers>
+					</ItemButton>
+					<ItemButton name="GS_CharacterSecondaryHandSlot" inherits="GS_PaperDollItemSlotButtonBottomTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GS_CharacterMainHandSlot" relativePoint="TOPRIGHT" x="4" y="0"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<Texture inherits="Char-Slot-Bottom-Right">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="GS_CharacterSecondaryHandSlot" relativePoint="TOPRIGHT" x="0" y="10"/>
+									</Anchors>
+								</Texture>
+							</Layer>
+						</Layers>
+					</ItemButton>
+				</Frames>
+			</Frame>
+		</Frames>
+        <Scripts>
+			<OnShow>
+				GS_CharFrame_OnShow(self);
+			</OnShow>
+        </Scripts>
+    </Frame>
+</Ui>

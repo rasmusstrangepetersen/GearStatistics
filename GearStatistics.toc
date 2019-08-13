@@ -1,0 +1,16 @@
+## Interface: 80200
+## Title: GearStatistics
+## Notes: Gives a score for your gear and color codes gear based on your equipped gear.
+## Author: Rasmus Strange Petersen
+## SavedVariables: GS
+## Dependencies:
+## Version: 8.2.0
+## OptionalDeps: 
+## X-Category: Inventory
+
+GearStatistics.xml
+GS_CharFrame.xml
+GS_CharFrameGear.xml
+
+## Locale files
+Locales\localizationEn.lua

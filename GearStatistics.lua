@@ -628,6 +628,9 @@ function GS_GetLevelColor(itemLevel, playerAverageItemLevel)
     return GS_colorBlue;
   end
   
+  -- fix for itemlevels with '+', eg. 385+
+  string.gsub(itemLevel, "+", "")
+  
 --  local iLevelDiff = ((itemLevel-playerAverageItemLevel)/playerAverageItemLevel)*100;
   local iLevelDiff = (itemLevel-playerAverageItemLevel);
   GS_Debug("iLevelDiff: "..iLevelDiff, 0)

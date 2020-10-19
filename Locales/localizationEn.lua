@@ -2,7 +2,7 @@ if GetLocale() ~= "enUS" then return end -- When adding a new language, remember
 
 -- *** Version information
 GS_VERSION_TEXT = "GearStatistics version: ";
-GS_VERSION_WOWVERSION = " - Battle of Azeroth"
+GS_VERSION_WOWVERSION = " - Shadowland"
 
 -- *** AddOn information - chat messages
 GS_CMD_VERSION = "version"
@@ -59,9 +59,9 @@ GS_OFFHAND = "Off Hand"
 GEARSTAT_OFFHANDSLOT = "SecondaryHandSlot"
 
 GS_GEARLIST = {
-    { name = "HeadSlot" ,         desc = GS_HEAD,       minLevel = 30 },
-    { name = "NeckSlot" ,         desc = GS_NECK,       minLevel = 30 },
-    { name = "ShoulderSlot" ,     desc = GS_SHOULDERS,  minLevel = 20 },
+    { name = "HeadSlot" ,         desc = GS_HEAD,       minLevel = 1 },
+    { name = "NeckSlot" ,         desc = GS_NECK,       minLevel = 1 },
+    { name = "ShoulderSlot" ,     desc = GS_SHOULDERS,  minLevel = 1 },
     { name = "BackSlot" ,         desc = GS_BACK,       minLevel = 1  },
     { name = "ChestSlot" ,        desc = GS_CHEST,      minLevel = 1  },
     { name = "ShirtSlot" ,        desc = GS_SHIRT,      minLevel = 0  }, -- minLevel = 0, since it's not a gear item with a gear score
@@ -71,10 +71,10 @@ GS_GEARLIST = {
     { name = "WaistSlot" ,        desc = GS_WAIST,      minLevel = 1  },
     { name = "LegsSlot" ,         desc = GS_LEGS,       minLevel = 1  },
     { name = "FeetSlot" ,         desc = GS_FEET,       minLevel = 1  },
-    { name = "Finger0Slot" ,      desc = GS_FINGER1,    minLevel = 20 },
-    { name = "Finger1Slot" ,      desc = GS_FINGER2,    minLevel = 20 },
-    { name = "Trinket0Slot" ,     desc = GS_TRINKET1,   minLevel = 50 },
-    { name = "Trinket1Slot" ,     desc = GS_TRINKET2,   minLevel = 50 },
+    { name = "Finger0Slot" ,      desc = GS_FINGER1,    minLevel = 1 },
+    { name = "Finger1Slot" ,      desc = GS_FINGER2,    minLevel = 1 },
+    { name = "Trinket0Slot" ,     desc = GS_TRINKET1,   minLevel = 1 },
+    { name = "Trinket1Slot" ,     desc = GS_TRINKET2,   minLevel = 1 },
     { name = "MainHandSlot" ,     desc = GS_MAINHAND,   minLevel = 1  },
     { name = GEARSTAT_OFFHANDSLOT,desc = GS_OFFHAND,    minLevel = 1  }
 }

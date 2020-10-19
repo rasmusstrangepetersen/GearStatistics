@@ -661,9 +661,9 @@ function GS_HookTooltips()
   GameTooltip:HookScript("OnTooltipSetItem", GS_Tooltip_OnGameTooltipSetItem)
   GameTooltip:HookScript("OnHide", GS_Tooltip_OnHide)
   
-  WorldMapTooltip:HookScript("OnShow", GS_WorldMapTooltip_OnShow);
-  WorldMapTooltip:HookScript("OnTooltipSetItem", GS_WorldMapTooltip_OnGameTooltipSetItem)
-  WorldMapTooltip:HookScript("OnHide", GS_WorldMapTooltip_OnHide)
+--  WorldMapTooltip:HookScript("OnShow", GS_WorldMapTooltip_OnShow);
+--  WorldMapTooltip:HookScript("OnTooltipSetItem", GS_WorldMapTooltip_OnGameTooltipSetItem)
+--  WorldMapTooltip:HookScript("OnHide", GS_WorldMapTooltip_OnHide)
   
   ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", GS_RefTooltip1_OnRefTooltipSetItem);
   ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", GS_RefTooltip2_OnRefTooltipSetItem);

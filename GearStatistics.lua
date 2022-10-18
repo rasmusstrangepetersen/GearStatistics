@@ -1,5 +1,5 @@
 -- *** Version information
-GS_VERSION = "9.0.1";
+GS_VERSION = "9.2.7";
 
 -- *** Used colors ***
 GS_colorRed    = "ffff0000"; -- red DEBUG text color and red gear (best)

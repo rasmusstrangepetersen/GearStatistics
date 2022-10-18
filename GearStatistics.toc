@@ -1,10 +1,10 @@
-## Interface: 90001
-## Title: GearStatistics
+## Interface: 90207
+## Title: GearStatistics |cff00aa009.2.7|r
 ## Notes: Gives a score for your gear and color codes gear based on your equipped gear.
 ## Author: Rasmus Strange Petersen
 ## SavedVariables: GS
 ## Dependencies:
-## Version: 9.0.1
+## Version: 9.2.7
 ## OptionalDeps: 
 ## X-Category: Inventory
 

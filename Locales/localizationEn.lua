@@ -2,7 +2,7 @@ if GetLocale() ~= "enUS" then return end -- When adding a new language, remember
 
 -- *** Version information
 GS_VERSION_TEXT = "GearStatistics version: ";
-GS_VERSION_WOWVERSION = " - Shadowland"
+GS_VERSION_WOWVERSION = " - Dragonflight"
 
 -- *** AddOn information - chat messages
 GS_CMD_VERSION = "version"

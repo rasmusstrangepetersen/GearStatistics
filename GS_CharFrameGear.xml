@@ -3,7 +3,7 @@
     <Script file="GS_CharFrame.lua"/>
 	
 	<Texture name="PaperDollFrameFlyoutTexture" file="Interface\PaperDollInfoFrame\UI-GearManager-Flyout" hidden="true" virtual="true"/>
-    <ItemButton name="GS_PaperDollItemSlotButtonTemplate" inherits="ItemButtonTemplate" virtual="true">
+    <ItemButton name="GS_PaperDollItemSlotButtonTemplate" virtual="true">
 		<Layers>
 			<Layer level="OVERLAY">
 				<Texture name="$parentIgnoreTexture" file="Interface\PaperDollInfoFrame\UI-GearManager-LeaveItem-Transparent">

@@ -4,7 +4,7 @@
 ## Author: Rasmus Strange Petersen
 ## SavedVariables: GS
 ## Dependencies:
-## Version: 10.0.0
+## Version: 10.0.0.1
 ## OptionalDeps: 
 ## X-Category: Inventory
 

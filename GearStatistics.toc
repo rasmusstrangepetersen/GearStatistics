@@ -1,10 +1,10 @@
-## Interface: 100000
-## Title: GearStatistics |cff00aa0010.0.0|r
+## Interface: 100002
+## Title: GearStatistics |cff00aa0010.0.2|r
 ## Notes: Gives a score for your gear and color codes gear based on your equipped gear.
 ## Author: Rasmus Strange Petersen
 ## SavedVariables: GS
 ## Dependencies:
-## Version: 10.0.0.1
+## Version: 10.0.2
 ## OptionalDeps: 
 ## X-Category: Inventory
 

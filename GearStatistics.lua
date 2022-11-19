@@ -1,5 +1,5 @@
 -- *** Version information
-GS_VERSION = "10.0.0";
+GS_VERSION = "10.0.2";
 
 -- *** Used colors ***
 GS_colorRed    = "ffff0000"; -- red DEBUG text color and red gear (best)
@@ -656,20 +656,89 @@ end
 -- **************************************************************************
 -- DESC : Hook the item tooltip
 -- **************************************************************************
+
+local isTooltipDone
+
 function GS_HookTooltips()
-  GameTooltip:HookScript("OnShow", GS_Tooltip_OnShow);
-  GameTooltip:HookScript("OnTooltipSetItem", GS_Tooltip_OnGameTooltipSetItem)
-  GameTooltip:HookScript("OnHide", GS_Tooltip_OnHide)
+--  GameTooltip:HookScript("OnShow", GS_Tooltip_OnShow);
+--  GameTooltip:HookScript("OnTooltipSetItem", GS_Tooltip_OnGameTooltipSetItem)
+--  GameTooltip:HookScript("OnHide", GS_Tooltip_OnHide)
+
+  GameTooltip:HookScript("OnShow", GS_setTooltip);
+  GameTooltip:HookScript("OnTooltipCleared", GS_Tooltip_OnHide)  
+	
+--  ShoppingTooltip:HookScript("OnShow", GS_setTooltip);
+--  ShoppingTooltip:HookScript("OnTooltipCleared", GS_Tooltip_OnHide)  
+	
   
 --  WorldMapTooltip:HookScript("OnShow", GS_WorldMapTooltip_OnShow);
 --  WorldMapTooltip:HookScript("OnTooltipSetItem", GS_WorldMapTooltip_OnGameTooltipSetItem)
 --  WorldMapTooltip:HookScript("OnHide", GS_WorldMapTooltip_OnHide)
   
-  ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", GS_RefTooltip1_OnRefTooltipSetItem);
-  ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", GS_RefTooltip2_OnRefTooltipSetItem);
-  ShoppingTooltip1:HookScript("OnTooltipSetItem", GS_RefTooltip1_OnRefTooltipSetItem);
-  ShoppingTooltip2:HookScript("OnTooltipSetItem", GS_RefTooltip2_OnRefTooltipSetItem);
+--  ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", GS_RefTooltip1_OnRefTooltipSetItem);
+--  ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", GS_RefTooltip2_OnRefTooltipSetItem);
+--  ShoppingTooltip1:HookScript("OnTooltipSetItem", GS_RefTooltip1_OnRefTooltipSetItem);
+--  ShoppingTooltip2:HookScript("OnTooltipSetItem", GS_RefTooltip2_OnRefTooltipSetItem);
+
+
+	local function OnTooltipSetItem(self, data)
+		if (not isTooltipDone) and self then
+			isTooltipDone = true
+
+			local _, link = GetItemInfo(data.id)
+
+			if link then
+				GS_setTooltip(self, link)
+			end
+		end			
+	end
+	
+	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, OnTooltipSetItem)
+
+
+
 end
+
+-- **************************************************************************
+-- DESC : Add GearStatistics values to the GameToolTip
+-- **************************************************************************
+function GS_setTooltip(tooltip, ...)
+  GS_Debug("entering setTooltip", 0)
+
+  if (lastTooltipText == "") then
+    if (not tooltip) then
+      tooltip = GameTooltip
+    end
+
+    -- only process if for a game item 
+    local itemName, itemLink = tooltip:GetItem()
+    GS_Debug("GetItem", 0)
+    GS_Debug("itemname: "..itemName.." - itemLink: "..itemLink, 0)
+  
+    if itemLink then
+      local text, success = GS_GetGameTooltipText(itemLink);
+      -- add score to tooltip if the tooltip has at least 1 line
+      local GS_tooltip = getglobal(tooltip:GetName().."TextLeft1");
+      if (GS_tooltip and success == 1) then
+        GS_Debug("Tooltip on show itemScore: "..text.." : success: "..success.."itemlink: "..itemLink, 0);
+     
+        -- only show tooltip, if success in getting text
+        lastTooltipText = text;
+        tooltip:AddDoubleLine(" ", lastTooltipText);
+      end
+    end
+  	GS_Debug("tooltip created: "..lastTooltipText, 0)
+    
+  else
+    tooltip:AddLine(" ", lastTooltipText);
+  	GS_Debug("last tooltip used"..lastTooltipText, 0)
+  end
+	
+  tooltip:Show()
+end
+
+
+
 
 -- **************************************************************************
 -- DESC : Reset GameToolTip
@@ -680,6 +749,7 @@ function GS_ResetTooltip()
   lastRefTooltipText1 = ""
   lastRefTooltipText2 = ""
   lastWorldMapTooltipText = ""
+  isTooltipDone = nil
 end
 
 -- **************************************************************************
@@ -737,8 +807,10 @@ end
 -- DESC : Show GameToolTip
 -- **************************************************************************
 function GS_Tooltip_OnShow(tooltip, ...)
-  GS_Debug("show tooltip", 0)
-
+  GS_Debug("show tooltip", 1)
+  
+  GS_Tooltip_OnGameTooltipSetItem(tooltip, ...)
+  
   tooltip:Show()
 end
 
@@ -755,7 +827,7 @@ end
 -- DESC : Add GearStatistics values to the GameToolTip
 -- **************************************************************************
 function GS_Tooltip_OnGameTooltipSetItem(tooltip, ...)
-  GS_Debug("entering set item tooltip", 0)
+  GS_Debug("entering set item tooltip", 1)
 
   if (lastTooltipText == "") then
     GS_Debug("set item tooltip", 0)
@@ -766,6 +838,8 @@ function GS_Tooltip_OnGameTooltipSetItem(tooltip, ...)
   
     -- only process if for a game item 
     local itemName, itemLink = tooltip:GetItem()
+    GS_Debug("GetItem", 0)
+    GS_Debug("itemname: "..itemName.." - itemLink: "..itemLink, 0)
   
     if itemLink then
       local text, success = GS_GetGameTooltipText(itemLink);
@@ -777,6 +851,7 @@ function GS_Tooltip_OnGameTooltipSetItem(tooltip, ...)
         -- only show tooltip, if success in getting text
         lastTooltipText = text;
         tooltip:AddDoubleLine(" ", lastTooltipText);
+
       end
     end
   else
@@ -788,7 +863,7 @@ end
 -- DESC : Add GearStatistics values to the RefGameToolTip1
 -- **************************************************************************
 function GS_RefTooltip1_OnRefTooltipSetItem(tooltip, ...)
-  GS_Debug("entering setup ref tooltip1", 0)
+  GS_Debug("entering setup ref tooltip1", 1)
   
   if (lastRefTooltipText1 == "") then
     GS_Debug("setup ref tooltip", 0)
@@ -821,7 +896,7 @@ end
 -- DESC : Add GearStatistics values to the RefGameToolTip2
 -- **************************************************************************
 function GS_RefTooltip2_OnRefTooltipSetItem(tooltip, ...)
-  GS_Debug("entering setup ref tooltip2", 0)
+  GS_Debug("entering setup ref tooltip2", 1)
   
   if (lastRefTooltipText2 == "") then
     GS_Debug("setup ref tooltip", 0)

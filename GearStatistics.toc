@@ -4,7 +4,7 @@
 ## Author: Rasmus Strange Petersen
 ## SavedVariables: GS
 ## Dependencies:
-## Version: 10.0.2
+## Version: 10.0.2.1
 ## OptionalDeps: 
 ## X-Category: Inventory
 
@@ -14,3 +14,4 @@ GS_CharFrameGear.xml
 
 ## Locale files
 Locales\localizationEn.lua
+toolTip.lua

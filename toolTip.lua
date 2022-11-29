@@ -123,7 +123,11 @@ function GS_GetTooltipText2(tooltip)
 	  -- calculate gear score
 	  local gearScore =	0
 	  for index in ipairs(GS_STATTYPES) do
-    	gearScore = gearScore + tonumber(GS_scanTooltip(tooltip, GS_STATTYPES[index].text))
+	    local statValue = tonumber(GS_scanTooltip(tooltip, GS_STATTYPES[index].text))
+	    -- in case the scan fails
+	    if (statValue) then
+    	  gearScore = gearScore + statValue
+    	end
 	  end
 
 	  -- calculate total item score

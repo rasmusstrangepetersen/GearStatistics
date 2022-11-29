@@ -1,5 +1,5 @@
 -- *** Version information
-GS_VERSION = "10.0.2.1";
+GS_VERSION = "10.0.2.2";
 
 -- *** Used colors ***
 GS_colorRed    = "ffff0000"; -- red DEBUG text color and red gear (best)
@@ -62,7 +62,7 @@ function GS_OnEvent(self, event, a1, ...)
       GS_CharFrame:Hide();
       GS_CharFrame:Show();
     end
-    GS_ResetTooltip();
+ --   GS_ResetTooltip();
     return;
   end
     
@@ -626,9 +626,10 @@ function GS_GetLevelColor(itemLevel, playerAverageItemLevel)
   
   -- fix for itemlevels with '+', eg. 385+
   string.gsub(itemLevel, "+", "")
+  local iLvl = tonumber(itemLevel)
   
 --  local iLevelDiff = ((itemLevel-playerAverageItemLevel)/playerAverageItemLevel)*100;
-  local iLevelDiff = (itemLevel-playerAverageItemLevel);
+  local iLevelDiff = (iLvl-playerAverageItemLevel);
   GS_Debug("iLevelDiff: "..iLevelDiff, 0)
   if (iLevelDiff >= 20) then
     color = GS_colorRed;
@@ -644,7 +645,7 @@ function GS_GetLevelColor(itemLevel, playerAverageItemLevel)
     color = GS_colorGrey;
   end
 
-  GS_Debug("Get level color for itemLevel: "..itemLevel..", playerAverageItemLevel: "..playerAverageItemLevel..", ".."|c"..color.."returning this color", 0);
+  GS_Debug("Get level color for itemLevel: "..iLvl..", playerAverageItemLevel: "..playerAverageItemLevel..", ".."|c"..color.."returning this color", 0);
   
   return color;
 end 

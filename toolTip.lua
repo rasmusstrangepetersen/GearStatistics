@@ -6,24 +6,6 @@
 -- **************************************************************************
 -- DESC : Hook the item tooltip
 -- **************************************************************************
-function GS_HookTooltipsOld()
-  -- **** Make sure tooltiptext stay while mouseover is active ***
-  local function OnTooltipSetItem(tooltip, data)
-   	if tooltip == GameTooltip then
-   	  GS_setTooltip(tooltip)
-    end
-  end
-	
-  TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, OnTooltipSetItem)
-
-  -- hook normal tooltip from bags and character
-  GameTooltip:HookScript("OnShow", GS_setTooltip);
-  
-  
-  -- Dropped trying to add score on compareitems, it seems you will have to recreate the compared item, in order to add text
-
-end
-
 function GS_HookTooltips()
 	
   local function addGearstatToTooltip(tooltip, data)
@@ -33,37 +15,8 @@ function GS_HookTooltips()
 	 end
   end
 	
-	
   TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, addGearstatToTooltip)
 
-end
-
-
-
--- **************************************************************************
--- DESC : Add GearStatistics values to the tooltip
--- **************************************************************************
-function GS_setTooltip(tooltip)
-  GS_Debug("entering setTooltip", 0)
-  
-  -- only process if for a game item 
-  local itemName, itemLink = tooltip:GetItem()
-  
-  if itemLink then
-    local text, success = GS_GetTooltipText(itemLink);
-
-    -- add score to tooltip if the tooltip has at least 1 line
-    local GS_tooltip = getglobal(tooltip:GetName().."TextLeft1");
-
-    if (GS_tooltip and success == 1) then
-      GS_Debug("Tooltip on show itemScore: "..text.." : success: "..success.."itemlink: "..itemLink, 0);
-     
-      -- only show tooltip, if success in getting text
-      tooltip:AddDoubleLine(" ", text);
-    end
-  end
-	
-  tooltip:Show()
 end
 
 -- **************************************************************************
@@ -112,7 +65,6 @@ function GS_GetTooltipText2(tooltip)
       
       -- calculate levelColor
       local levelColor = GS_GetLevelColor(iLevel, GS.currentPlayer.averageItemLevel);
---      local levelColor = GS_colorYellow
       
       -- calculate enchantScore INACTIVE
       local enchantScore, enchantText = GS_GetItemEnchantScore(iLink)
@@ -142,69 +94,18 @@ function GS_GetTooltipText2(tooltip)
     return text;
   end
 
-  
+
 -- **************************************************************************
 -- DESC : Returns value right to the search text
 -- **************************************************************************
 function GS_scanTooltip(scantip, searchstring)
-	
   local value = 0
-
-  if scantip == GameTooltip then
+  
+  if GS_isTooltipUsable(scantip) then
     -- Scan the tooltip:
-    for i = 2, GameTooltip:NumLines() do -- Line 1 is always the name so you can skip it.
-      local text = _G["GameTooltipTextLeft"..i]:GetText()
-      GS_Debug("debug text: "..text.." - numlines: "..i.."/"..GameTooltip:NumLines(), 0)
-
-      local match = strmatch(text, searchstring)
-      if match and match ~= "" then
-        value = gsub(text, searchstring, "")
-      end
-    end
-  elseif (scantip == ShoppingTooltip1) then
-    -- Scan the tooltip:
-    for i = 2, ShoppingTooltip1:NumLines() do -- Line 1 is always the name so you can skip it.
-      local text = _G["ShoppingTooltip1TextLeft"..i]:GetText()
-
-      local match = strmatch(text, searchstring)
-      if match and match ~= "" then
-        value = gsub(text, searchstring, "")
-      end
-    end
-  elseif (scantip == ShoppingTooltip2) then
-    -- Scan the tooltip:
-    for i = 2, ShoppingTooltip2:NumLines() do -- Line 1 is always the name so you can skip it.
-      local text = _G["ShoppingTooltip2TextLeft"..i]:GetText()
-
-      local match = strmatch(text, searchstring)
-      if match and match ~= "" then
-        value = gsub(text, searchstring, "")
-      end
-    end
-  elseif (scantip == ItemRefTooltip) then
-    -- Scan the tooltip:
-    for i = 2, ItemRefTooltip:NumLines() do -- Line 1 is always the name so you can skip it.
-      local text = _G["ItemRefTooltipTextLeft"..i]:GetText()
-
-      local match = strmatch(text, searchstring)
-      if match and match ~= "" then
-        value = gsub(text, searchstring, "")
-      end
-    end
-  elseif (scantip == ItemRefShoppingTooltip1) then
-    -- Scan the tooltip:
-    for i = 2, ItemRefShoppingTooltip1:NumLines() do -- Line 1 is always the name so you can skip it.
-      local text = _G["ItemRefShoppingTooltip1TextLeft"..i]:GetText()
-
-      local match = strmatch(text, searchstring)
-      if match and match ~= "" then
-        value = gsub(text, searchstring, "")
-      end
-    end
-  elseif (scantip == ItemRefShoppingTooltip2) then
-    -- Scan the tooltip:
-    for i = 2, ItemRefShoppingTooltip2:NumLines() do -- Line 1 is always the name so you can skip it.
-      local text = _G["ItemRefShoppingTooltip2TextLeft"..i]:GetText()
+    for i = 2, scantip:NumLines() do -- Line 1 is always the name so you can skip it.
+      local text = _G[scantip:GetName().."TextLeft"..i]:GetText()
+      GS_Debug("debug text: "..text.." - numlines: "..i.."/"..scantip:NumLines(), 0)
 
       local match = strmatch(text, searchstring)
       if match and match ~= "" then
@@ -214,6 +115,24 @@ function GS_scanTooltip(scantip, searchstring)
   end
   
   if (value == nil) then value = 0 end
-  
   return value
 end
+
+-- **************************************************************************
+-- DESC : Check if the tooltip is ingame
+-- **************************************************************************
+function GS_isTooltipUsable(scantip)
+  
+  if(scantip == GameTooltip) then return 1 end
+  if(scantip == ShoppingTooltip1) then return 1 end
+  if(scantip == ShoppingTooltip2) then return 1 end
+  if(scantip == ItemRefTooltip) then return 1 end
+  if(scantip == ItemRefShoppingTooltip1) then return 1 end
+  if(scantip == ItemRefShoppingTooltip2) then return 1 end
+  
+  return nil
+  
+end
+
+
+  

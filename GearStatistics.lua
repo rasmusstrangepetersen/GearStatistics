@@ -22,7 +22,7 @@ local GS_Cycle = 0;
 local GS_TimeCounter = 0;
 local GS_UpdateFrame = CreateFrame("frame");
 local GS_UpdateDelay = 2;
-
+local GS_lastDebug = ""
 -- *** Functions
 
 -- **************************************************************************
@@ -30,8 +30,9 @@ local GS_UpdateDelay = 2;
 -- VARS : Message = message to print to chat frame
 -- **************************************************************************
 function GS_Debug(Message, override)
-  if (GS_showDebug == 1 or override == 1) then
+  if ((GS_showDebug == 1 or override == 1) and Message ~= lastDebug) then
     DEFAULT_CHAT_FRAME:AddMessage("|c"..GS_colorRed.."GS: " .. Message);
+    lastDebug = Message;
   end
 end
 

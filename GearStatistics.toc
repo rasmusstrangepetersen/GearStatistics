@@ -1,5 +1,5 @@
 ## Interface: 100207
-## Title: GearStatistics |cff00aa0010.0.2|r
+## Title: GearStatistics |cff00aa0011.0.0|r
 ## Notes: Gives a score for your gear and color codes gear based on your equipped gear.
 ## Author: Dornonville
 ## SavedVariables: GS

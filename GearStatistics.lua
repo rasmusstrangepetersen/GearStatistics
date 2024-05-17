@@ -8,7 +8,7 @@ local cycleNumber = 0;
 local timeCounter = 0;
 local updateFrame = CreateFrame("frame");
 local updateDelay = 2;
-local GS_lastDebug = ""
+
 -- *** Functions
 
 -- **************************************************************************
@@ -320,7 +320,7 @@ function updateCurrentPlayerItemList(unit)
       if(GEARLIST[index].minLevel >= 0 and itemLink and isLegionArtifactWeapon(GEARLIST[index].desc, itemName) == 0) then
         local enchantScore, enchantText = getItemEnchantScore(slotLink)
         local gemScore, gemText = getItemGemScore(slotLink)
-        local itemScore = getItemScore(slotLink) + enchantScore + gemScore
+        itemScore = getItemScore(slotLink) + enchantScore + gemScore
       
         -- compensate for 2H weapons
         if(isWeaponTwoHand(itemSubType) == 1) then

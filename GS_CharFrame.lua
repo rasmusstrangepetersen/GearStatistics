@@ -1,5 +1,4 @@
 -- *** Local variables
-local showCfDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
 local _G = getfenv(0);
 
 -- *** Functions
@@ -8,18 +7,18 @@ local _G = getfenv(0);
 -- DESC : Setup CharFrame to match the playerName
 -- **************************************************************************
 function GS_CharFrame_OnShow(self, playerName)
-  CfDebug("CharFrame OnShow", 0);
+  debugMessage("CharFrame OnShow", 0);
 
   if(not playerName) then
-    playerName = UnitName("player");
+    playerName = UnitName(GS_TEXT_PLAYER);
   end
   
-  local race, fileName = UnitRace("player");
-  SetPortraitTexture(GS_CharFramePaperDollFramePortrait, "player");
+  local race, fileName = UnitRace(GS_TEXT_PLAYER);
+  SetPortraitTexture(GS_CharFramePaperDollFramePortrait, GS_TEXT_PLAYER);
   GS_CharFrameDressUpFrameTitleText:SetText(playerName);
 
   local playerRecord = getPlayerRecord(playerName);
-  CfDebug("Name: "..playerName..", Level: "..playerRecord.playerLevel..", "..playerRecord.race..", "..playerRecord.class, 0);
+  debugMessage("Name: "..playerName..", Level: "..playerRecord.playerLevel..", "..playerRecord.race..", "..playerRecord.class, 0);
 
   GS_CharFrameDressUpFrameDescriptionText:SetText("Level "..playerRecord.playerLevel.." "..playerRecord.race.." "..playerRecord.class);
   GS_CharFrameDressUpFrameGuildText:SetText(playerRecord.guild)
@@ -34,17 +33,17 @@ function GS_CharFrame_OnShow(self, playerName)
   GS_CharFrameDressUpFrameTotalScore:SetText(CHARFRAME_TOTAL_SCORE ..": i"..format("%.0f", playerRecord.totalItemLevel).." ("..format("%.0f", playerRecord.totalItemScore)..")");
 
   for index in ipairs(GEARLIST) do
-    CfDebug("ready to update gear, index: "..index, 0)
+    debugMessage("ready to update gear, index: "..index, 0)
     local itemColor = colorNone;
     local itemScore = 0;    
     local slotName = GEARLIST[index].name;
-    CfDebug("Slot: "..slotName, 0);
+    debugMessage("Slot: "..slotName, 0);
     button = _G["GS_Character"..slotName];
 
-    CfDebug("playerRecord.itemList[slotName].itemName "..playerRecord.itemList[slotName].itemName, 0);
+    debugMessage("playerRecord.itemList[slotName].itemName "..playerRecord.itemList[slotName].itemName, 0);
     
     if(playerRecord.itemList and playerRecord.itemList[slotName] and playerRecord.itemList[slotName].itemName ~= TEXT_NO_ITEM_EQUIPPED) then
-      CfDebug("creating "..playerRecord.itemList[slotName].itemName, 0);
+      debugMessage("creating "..playerRecord.itemList[slotName].itemName, 0);
       button.link = playerRecord.itemList[slotName].itemLink;
       local itemRarity = playerRecord.itemList[slotName].itemRarity;
       if(ITEM_RARITY[itemRarity] and ITEM_RARITY[itemRarity].color) then
@@ -55,27 +54,12 @@ function GS_CharFrame_OnShow(self, playerName)
       end
       GS_UpdateItemSlot(button, ITEM_RARITY[playerRecord.itemList[slotName].itemRarity+1].color, playerRecord.itemList[slotName].itemLevel, itemScore, playerRecord.playerLevel, playerRecord.twoHandWeapon);
       button:Show();
-
     else
-      CfDebug("No gear item found", 0);
+      debugMessage("No gear item found", 0);
       button.link = nil;
       GS_UpdateItemSlot(button, 0, 0, 0, playerRecord.playerLevel, playerRecord.twoHandWeapon);
       button:Show();
     end
-    
---    CfDebug("rarity: "..playerRecord.itemList[slotName].itemRarity.." - name: "..ITEM_RARITY[playerRecord.itemList[slotName].itemRarity].name.." - color: "..ITEM_RARITY[playerRecord.itemList[slotName].itemRarity].color, 0); 
-    
-  end
-
-end
-
--- **************************************************************************
--- DESC : Debug function to print message to chat frame
--- VARS : Message = message to print to chat frame
--- **************************************************************************
-function CfDebug(Message, override)
-  if (showCfDebug == 1 or override == 1) then
-    DEFAULT_CHAT_FRAME:AddMessage("|c".. colorRed .."CharFrame: " .. Message);
   end
 end
 
@@ -102,7 +86,7 @@ function GS_ItemButton_OnEnter(self)
     if (GetItemInfo(self.link)) then
       GameTooltip:SetHyperlink(self.link);  -- if item slot button has link show it in tooltip 
     else
-      GameTooltip:SetText("|c".. colorRed .."Potentially unsafe link|c".. colorYellow .." - you may shift right click to view|nWARNING this may disconnect you from the server!");
+      GameTooltip:SetText("|c".. colorRed ..GS_TEXT_UNSAFELINK.."|c".. colorYellow .." - "..GS_TEXT_DISCONNECT);
     end
   else
     GameTooltip:SetText(_G[self.slotName:upper()]); -- otherwise just show slot name
@@ -139,7 +123,7 @@ end
 -- **************************************************************************
 function GS_UpdateItemSlot(button, itemColor, itemLevel, itemScore, playerLevel, twoHand)
   
-  CfDebug("Entering update",0);
+  debugMessage("Entering update",0);
 
   if(not playerLevel) then
     playerLevel = -1;
@@ -195,7 +179,7 @@ function GS_UpdateItemSlot(button, itemColor, itemLevel, itemScore, playerLevel,
       border:Show();
     end
   else
-    CfDebug("no button link", 0);
+    debugMessage("no button link", 0);
     SetItemButtonTexture(button,button.backgroundTextureName);
     for index in ipairs(GEARLIST) do
       -- if empty slot and player can equip slot, hide ignoreOverlayer or

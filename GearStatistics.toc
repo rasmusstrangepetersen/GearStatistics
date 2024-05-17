@@ -1,17 +1,21 @@
-## Interface: 100002
+## Interface: 100207
 ## Title: GearStatistics |cff00aa0010.0.2|r
 ## Notes: Gives a score for your gear and color codes gear based on your equipped gear.
-## Author: Rasmus Strange Petersen
+## Author: Dornonville
 ## SavedVariables: GS
 ## Dependencies:
-## Version: 10.0.2.1
-## OptionalDeps: 
-## X-Category: Inventory
+## Version: 11.0.0
+## OptionalDeps:
+
+## X-CompatibleLocales: enUS, enGB
+## X-Category: Tooltip
 
 GearStatistics.xml
 GS_CharFrame.xml
 GS_CharFrameGear.xml
 
+toolTip.lua
+variables.lua
+
 ## Locale files
 Locales\localizationEn.lua
-toolTip.lua

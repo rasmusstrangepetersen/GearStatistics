@@ -6,40 +6,38 @@
 -- **************************************************************************
 -- DESC : Hook the item tooltip
 -- **************************************************************************
-function GS_HookTooltips()
-	
+function hookTooltips()
   local function addGearstatToTooltip(tooltip, data)
- 	 local gearScoreText = GS_GetTooltipText2(tooltip);
+ 	 local gearScoreText = getTooltipText2(tooltip);
  	 if gearScoreText then
-	  	 tooltip:AddDoubleLine(GS_TOOLTIP_HEADLINE..":", gearScoreText);
+	  	 tooltip:AddDoubleLine(TOOLTIP_HEADLINE ..":", gearScoreText);
 	 end
   end
 	
   TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, addGearstatToTooltip)
-
 end
 
 -- **************************************************************************
 -- DESC : Returns the text to add to the ToolTip
 -- **************************************************************************
-function GS_GetTooltipText(slotLink)
+function getTooltipText(slotLink)
   local text = "";
   local success = 0;
 
   if (slotLink) then
     -- only add text to weapons and armor 
-    GS_Debug("GS_GetTooltipText: entering slotlink", 0)
+    debugMessage("getTooltipText: entering slotlink", 0)
     local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, maxStack, equipSlot, texture, vendorprice = GetItemInfo(slotLink);
-    if(itemType == GS_ARMOR or itemType == GS_WEAPON) then
-      local iLevel = GS_GetItemLevel(slotLink)
-      local levelColor = GS_GetLevelColor(iLevel, GS.currentPlayer.averageItemLevel);
-      local enchantScore, enchantText = GS_GetItemEnchantScore(slotLink)
-      local gemScore, gemText = GS_GetItemGemScore(slotLink)
-      local itemScore = GS_GetItemScore(slotLink) + enchantScore + gemScore
+    if(itemType == GEARTYPE_ARMOR or itemType == GEARTYPE_WEAPON) then
+      local iLevel = getItemLevel(slotLink)
+      local levelColor = getLevelColor(iLevel, GS.currentPlayer.averageItemLevel);
+      local enchantScore, enchantText = getItemEnchantScore(slotLink)
+      local gemScore, gemText = getItemGemScore(slotLink)
+      local itemScore = getItemScore(slotLink) + enchantScore + gemScore
               
-      GS_Debug("itemLevel: "..itemLevel.."  ilvl: "..iLevel, 0);
+      debugMessage("itemLevel: "..itemLevel.."  ilvl: "..iLevel, 0);
       if(iLevel ~= "0") then
-        text = GS_TOOLTIP_HEADLINE..": ".."|c"..levelColor.."i"..iLevel.." ("..format("%.0f", itemScore)..")"
+        text = TOOLTIP_HEADLINE ..": ".."|c"..levelColor.."i"..iLevel.." ("..format("%.0f", itemScore)..")"
         end
         success = 1;
       end
@@ -51,31 +49,30 @@ function GS_GetTooltipText(slotLink)
 -- **************************************************************************
 -- DESC : Returns the text to add to the ToolTip
 -- **************************************************************************
-function GS_GetTooltipText2(tooltip)
+function getTooltipText2(tooltip)
   local iName, iLink = TooltipUtil.GetDisplayedItem(tooltip);
-
-  local text = nil;
+  local text;
 
   if (iLink) then
     -- only add text to weapons and armor 
     local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType = GetItemInfo(iName);
-    if(itemType == GS_ARMOR or itemType == GS_WEAPON) then
+    if(itemType == GEARTYPE_ARMOR or itemType == GEARTYPE_WEAPON) then
       -- get item level	
-      local iLevel = GS_scanTooltip(tooltip, "Item Level ")
+      local iLevel = scanTooltip(tooltip, ITEMTEXT_ILVL.." ")
       
       -- calculate levelColor
-      local levelColor = GS_GetLevelColor(iLevel, GS.currentPlayer.averageItemLevel);
+      local levelColor = getLevelColor(iLevel, GS.currentPlayer.averageItemLevel);
       
       -- calculate enchantScore INACTIVE
-      local enchantScore, enchantText = GS_GetItemEnchantScore(iLink)
+      local enchantScore, enchantText = getItemEnchantScore(iLink)
 
 	  -- calculate gemScore INACTIVE	
-      local gemScore, gemText = GS_GetItemGemScore(iLink)
+      local gemScore, gemText = getItemGemScore(iLink)
 
 	  -- calculate gear score
 	  local gearScore =	0
-	  for index in ipairs(GS_STATTYPES) do
-	    local statValue = tonumber(GS_scanTooltip(tooltip, GS_STATTYPES[index].text))
+	  for index in ipairs(STATTYPES) do
+	    local statValue = tonumber(scanTooltip(tooltip, " "..STATTYPES[index].text))
 	    -- in case the scan fails
 	    if (statValue) then
     	  gearScore = gearScore + statValue
@@ -94,18 +91,17 @@ function GS_GetTooltipText2(tooltip)
     return text;
   end
 
-
 -- **************************************************************************
 -- DESC : Returns value right to the search text
 -- **************************************************************************
-function GS_scanTooltip(scantip, searchstring)
+function scanTooltip(scantip, searchstring)
   local value = 0
   
-  if GS_isTooltipUsable(scantip) then
+  if isTooltipUsable(scantip) then
     -- Scan the tooltip:
     for i = 2, scantip:NumLines() do -- Line 1 is always the name so you can skip it.
-      local text = _G[scantip:GetName().."TextLeft"..i]:GetText()
-      GS_Debug("debug text: "..text.." - numlines: "..i.."/"..scantip:NumLines(), 0)
+      local text = _G[scantip:GetName()..TOOLTIP_TEXTLEFT..i]:GetText()
+      debugMessage("debug text: "..text.." - numlines: "..i.."/"..scantip:NumLines(), 0)
 
       local match = strmatch(text, searchstring)
       if match and match ~= "" then
@@ -121,7 +117,7 @@ end
 -- **************************************************************************
 -- DESC : Check if the tooltip is ingame
 -- **************************************************************************
-function GS_isTooltipUsable(scantip)
+function isTooltipUsable(scantip)
   
   if(scantip == GameTooltip) then return 1 end
   if(scantip == ShoppingTooltip1) then return 1 end
@@ -133,6 +129,3 @@ function GS_isTooltipUsable(scantip)
   return nil
   
 end
-
-
-  

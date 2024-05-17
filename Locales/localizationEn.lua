@@ -1,161 +1,136 @@
 if GetLocale() ~= "enUS" then return end -- When adding a new language, remember to add the localization file to the .toc file
 
 -- *** Version information
-GS_VERSION_TEXT = "GearStatistics version: ";
-GS_VERSION_WOWVERSION = " - Dragonflight"
+VERSION_TEXT = "GearStatistics version: ";
+VERSION_WOWVERSION = " - Dragonflight"
 
 -- *** AddOn information - chat messages
-GS_CMD_VERSION = "version"
-GS_CMD_UPDATE = "update"
-GS_CMD_SHOW = "show"
-GS_CMD_HIDE = "hide"
-GS_CMD_RL = "rl"
-GS_CMD_RELOADUI = "reloadui"
-GS_CMD_TEXT_HEADLINE = "GearStatistics Commands:"
-GS_CMD_TEXT_VERSION = "/gs version - shows version information"
-GS_CMD_TEXT_UPDATE = "/gs update - updates the current players gearstatistics"
-GS_CMD_TEXT_SHOW = "/gs show or hide - toggles character frame with gearstatistics"
-GS_CMD_TEXT_RL = "/gs rl or reloadui - reloads the ui"
-GS_LOADED = "GearStatistics loaded, version: "
-GS_USE_COMMANDS = ", use command: /gs"
-GS_UPDATING_GEAR = "Updating record of your gear."
+CMD_VERSION = "version"
+CMD_UPDATE = "update"
+CMD_SHOW = "show"
+CMD_HIDE = "hide"
+CMD_RL = "rl"
+CMD_RELOADUI = "reloadui"
+CMD_TEXT_HEADLINE = "GearStatistics Commands:"
+CMD_TEXT_VERSION = "/gs version - shows version information"
+CMD_TEXT_UPDATE = "/gs update - updates the current players gearstatistics"
+CMD_TEXT_SHOW = "/gs show or hide - toggles character frame with gearstatistics"
+CMD_TEXT_RL = "/gs rl or reloadui - reloads the ui"
+TEXT_LOADED = "GearStatistics loaded, version: "
+TEXT_USE_COMMANDS = ", use command: /gs"
+TEXT_UPDATING_GEAR = "Updating record of your gear."
 
 -- *** GS variable texts 
-GS_NO_GUILD = " - No Guild recorded - "
-GS_NO_ITEM_EQUIPPED = "No item Equipped"
+TEXT_NO_GUILD = " - No Guild recorded - "
+TEXT_NO_ITEM_EQUIPPED = "No item Equipped"
 
 -- *** Item rarity
-GS_POOR = "Poor"
-GS_COMMON = "Common"
-GS_UNCOMMON = "Uncommon"
-GS_RARE = "Rare"
-GS_EPIC = "Epic"
-GS_LEGENDARY = "Legendary"
-GS_ARTIFACT = "Artifact"
-GS_HEIRLOOM = "Heirloom"
-GS_UNKNOWN = "Unknown"
+RARITY_POOR = "Poor"
+RARITY_COMMON = "Common"
+RARITY_UNCOMMON = "Uncommon"
+RARITY_RARE = "Rare"
+RARITY_EPIC = "Epic"
+RARITY_LEGENDARY = "Legendary"
+RARITY_ARTIFACT = "Artifact"
+RARITY_HEIRLOOM = "Heirloom"
+RARITY_UNKNOWN = "Unknown"
 
 -- *** GearList
-GS_HEAD = "Head"
-GS_NECK = "Neck"
-GS_SHOULDERS = "Shoulders"
-GS_BACK  = "Back"
-GS_CHEST = "Chest"
-GS_SHIRT = "Shirt"
-GS_TABARD = "Tabard"
-GS_WRIST = "Wrist"
-GS_HANDS = "Hands"
-GS_WAIST = "Waist"
-GS_LEGS = "Legs"
-GS_FEET = "Feet"
-GS_FINGER1 = "1st Finger"
-GS_FINGER2 = "2nd Finger"
-GS_TRINKET1 = "1st Trinket"
-GS_TRINKET2 = "2nd Trinket"
-GS_MAINHAND = "Main Hand"
-GS_OFFHAND = "Off Hand"
+GEAR_HEAD = "Head"
+GEAR_NECK = "Neck"
+GEAR_SHOULDERS = "Shoulders"
+GEAR_BACK = "Back"
+GEAR_CHEST = "Chest"
+GEAR_SHIRT = "Shirt"
+GEAR_TABARD = "Tabard"
+GEAR_WRIST = "Wrist"
+GEAR_HANDS = "Hands"
+GEAR_WAIST = "Waist"
+GEAR_LEGS = "Legs"
+GEAR_FEET = "Feet"
+GEAR_FINGER1 = "1st Finger"
+GEAR_FINGER2 = "2nd Finger"
+GEAR_TRINKET1 = "1st Trinket"
+GEAR_TRINKET2 = "2nd Trinket"
+GEAR_MAINHAND = "Main Hand"
+GEAR_OFFHAND = "Off Hand"
 
--- TODO move *** GearList
-GEARSTAT_OFFHANDSLOT = "SecondaryHandSlot"
+-- *** Gearslots
+GEARSLOT_HEAD = "HeadSlot"
+GEARSLOT_NECK = "NeckSlot"
+GEARSLOT_SHOULDERS = "ShoulderSlot"
+GEARSLOT_BACK = "BackSlot"
+GEARSLOT_CHEST = "ChestSlot"
+GEARSLOT_SHIRT = "ShirtSlot"
+GEARSLOT_TABARD = "TabardSlot"
+GEARSLOT_WRIST = "WristSlot"
+GEARSLOT_HANDS = "HandsSlot"
+GEARSLOT_WAIST = "WaistSlot"
+GEARSLOT_LEGS = "LegsSlot"
+GEARSLOT_FEET = "FeetSlot"
+GEARSLOT_FINGER1 = "Finger0Slot"
+GEARSLOT_FINGER2 = "Finger1Slot"
+GEARSLOT_TRINKET1 = "Trinket0Slot"
+GEARSLOT_TRINKET2 = "Trinket1Slot"
+GEARSLOT_MAINHAND = "MainHandSlot"
+GEARSLOT_OFFHAND = "SecondaryHandSlot"
 
-GS_GEARLIST = {
-    { name = "HeadSlot" ,         desc = GS_HEAD,       minLevel = 1 },
-    { name = "NeckSlot" ,         desc = GS_NECK,       minLevel = 1 },
-    { name = "ShoulderSlot" ,     desc = GS_SHOULDERS,  minLevel = 1 },
-    { name = "BackSlot" ,         desc = GS_BACK,       minLevel = 1  },
-    { name = "ChestSlot" ,        desc = GS_CHEST,      minLevel = 1  },
-    { name = "ShirtSlot" ,        desc = GS_SHIRT,      minLevel = 0  }, -- minLevel = 0, since it's not a gear item with a gear score
-    { name = "TabardSlot" ,       desc = GS_TABARD,     minLevel = 0  }, -- minLevel = 0, since it's not a gear item with a gear score
-    { name = "WristSlot" ,        desc = GS_WRIST,      minLevel = 1  },
-    { name = "HandsSlot" ,        desc = GS_HANDS,      minLevel = 1  },
-    { name = "WaistSlot" ,        desc = GS_WAIST,      minLevel = 1  },
-    { name = "LegsSlot" ,         desc = GS_LEGS,       minLevel = 1  },
-    { name = "FeetSlot" ,         desc = GS_FEET,       minLevel = 1  },
-    { name = "Finger0Slot" ,      desc = GS_FINGER1,    minLevel = 1 },
-    { name = "Finger1Slot" ,      desc = GS_FINGER2,    minLevel = 1 },
-    { name = "Trinket0Slot" ,     desc = GS_TRINKET1,   minLevel = 1 },
-    { name = "Trinket1Slot" ,     desc = GS_TRINKET2,   minLevel = 1 },
-    { name = "MainHandSlot" ,     desc = GS_MAINHAND,   minLevel = 1  },
-    { name = GEARSTAT_OFFHANDSLOT,desc = GS_OFFHAND,    minLevel = 1  }
-}
-
--- *** Gear stattypes
-GS_STATTYPES = {
-    { text = " Armor" },
-    { text = " Stamina" },
-    { text = " Intellect" },
-    { text = " Agility" },
-    { text = " Strength" },
-    { text = " Critical Strike" },
-    { text = " Mastery" },
-    { text = " Versatility" },
-    { text = " Haste" },
-    { text = " Block"},
-    { text = " Dodge"},
-    { text = " Avoidance"}
-}
-
--- TODO move
-ITEM_RARITY = {
-  { name=GS_POOR,      color=GS_colorGrey },
-  { name=GS_COMMON,    color=GS_colorWhite },
-  { name=GS_UNCOMMON,  color=GS_colorGreen },
-  { name=GS_RARE,      color=GS_colorDarkBlue },
-  { name=GS_EPIC,      color=GS_colorPurple },
-  { name=GS_LEGENDARY, color=GS_colorOrange },
-  { name=GS_ARTIFACT,  color=GS_colorGold },
-  { name=GS_HEIRLOOM,  color=GS_colorGold },
-  { name=GS_UNKNOWN,   color=GS_colorBlue },
-}
+-- *** stattypes
+STATTYPE_ARMOR = "Armor"
+STATYPE_STA = "Stamina"
+STATYPE_INT = "Intellect"
+STATYPE_AGI = "Agility"
+STATYPE_STR = "Strength"
+STATYPE_CRIT = "Critical Strike"
+STATYPE_MASTERY = "Mastery"
+STATYPE_VER = "Versatility"
+STATYPE_HASTE = "Haste"
+STATYPE_BLOCK = "Block"
+STATYPE_DODGE = "Dodge"
+STATYPE_AVOID = "Avoidance"
 
 -- *** Legion artifact weapons, dual wield but 1 weapon 
-GS_DH_HAVOC = "Twinblades of the Deceiver"
-GS_DH_VENGEANCE = "Aldrachi Warblades"
-GS_DRUID_FERAL = "Fangs of Ashamane"
-GS_DRUID_GUARDIAN = "Claws of Ursoc"
-GS_SHAMAN_ELEMENTAL = "The Highkeeper's Ward"
-GS_SHAMAN_ENHANCEMENT = "Fury of the Stonemother"
-GS_SHAMAN_RESTORATION = "Shield of the Sea Queen"
-GS_MAGE_FIRE = "Heart of the Phoenix"
-GS_PALY_PROT = "Oathseeker"
-GS_WARLOCK_DEMONOLOGY = "Spine of Thal'kiel"
-GS_MONK_WINDWALKER = "Fists of the Heavens"
-GS_WARRIOR_FURY = "Warswords of the Valarjar"
-GS_WARRIOR_PROTECTION = "Scaleshard"
-GS_PRIEST_SHADOW = "Secrets of the Void"
-GS_ROGUE_SUBTLETY = "Fangs of the Devourer"
-GS_ROGUE_OUTLAW = "The Dreadblades"
-GS_ROGUE_ASSASSINATION = "The Kingslayers"
-GS_DK_FROST = "Blades of the Fallen Prince"  
+ARTIFACT_DH_HAVOC = "Twinblades of the Deceiver"
+ARTIFACT_DH_VENGEANCE = "Aldrachi Warblades"
+ARTIFACT_DRUID_FERAL = "Fangs of Ashamane"
+ARTIFACT_DRUID_GUARDIAN = "Claws of Ursoc"
+ARTIFACT_SHAMAN_ELEMENTAL = "The Highkeeper's Ward"
+ARTIFACT_SHAMAN_ENHANCEMENT = "Fury of the Stonemother"
+ARTIFACT_SHAMAN_RESTORATION = "Shield of the Sea Queen"
+ARTIFACT_MAGE_FIRE = "Heart of the Phoenix"
+ARTIFACT_PALY_PROT = "Oathseeker"
+ARTIFACT_WARLOCK_DEMONOLOGY = "Spine of Thal'kiel"
+ARTIFACT_MONK_WINDWALKER = "Fists of the Heavens"
+ARTIFACT_WARRIOR_FURY = "Warswords of the Valarjar"
+ARTIFACT_WARRIOR_PROTECTION = "Scaleshard"
+ARTIFACT_PRIEST_SHADOW = "Secrets of the Void"
+ARTIFACT_ROGUE_SUBTLETY = "Fangs of the Devourer"
+ARTIFACT_ROGUE_OUTLAW = "The Dreadblades"
+ARTIFACT_ROGUE_ASSASSINATION = "The Kingslayers"
+ARTIFACT_DK_FROST = "Blades of the Fallen Prince"
 
 -- *** Two Hand weapon, subtypes
-GS_TWOHAND_AXE = "Two-Handed Axes"
-GS_TWOHAND_MACE = "Two-Handed Maces"
-GS_TWOHAND_SWORD = "Two-Handed Swords"
-GS_STAVES = "Staves"
-GS_POLEARMS = "Polearms"
-GS_BOWS = "Bows"
-GS_CROSSBOWS = "Crossbows"
-GS_GUNS = "Guns"
-GS_FISHING = "Fishing Poles"
+TWOHAND_AXES = "Two-Handed Axes"
+TWOHAND_MACES = "Two-Handed Maces"
+TWOHAND_SWORDS = "Two-Handed Swords"
+TWOHAND_STAVES = "Staves"
+TWOHAND_POLEARMS = "Polearms"
+TWOHAND_BOWS = "Bows"
+TWOHAND_CROSSBOWS = "Crossbows"
+TWOHAND_GUNS = "Guns"
+TWOHAND_FISHING_POLES = "Fishing Poles"
 
 -- *** CharFrame texts
-GS_CHARFRAME_PLAYERNAME = "Player name"
-GS_CHARFRAME_LEVELRACECLASS = "Level <level> <race> <class>"
-GS_CHARFRAME_GUILD = "Guild name"
-GS_CHARFRAME_TOTALSCORE = "Total"
-GS_CHARFRAME_AVERAGESCORE = "Average"
+CHARFRAME_PLAYER_NAME = "Player name"
+CHARFRAME_LEVEL_RACE_CLASS = "Level <level> <race> <class>"
+CHARFRAME_GUILD = "Guild name"
+CHARFRAME_TOTAL_SCORE = "Total"
+CHARFRAME_AVERAGE_SCORE = "Average"
 
--- *** Tooltip text
-GS_ARMOR = "Armor"
-GS_WEAPON = "Weapon"
-GS_TOOLTIP_HEADLINE = "GearStat"
-
--- *** Locale for Titan plugin
-TITAN_GS_TOOLTIP_TITLE = "Gear Statistics"
-TITAN_GS_LABEL_TEXT = "Gear Score: "
-TITAN_GS_GEAR_CLICK = "Click".."|r ".."to open the main window."
-TITAN_GS_NO = "No"
-TITAN_GS_EQUIPPED = "equipped"
-TITAN_GS_AVERAGE = "Average"
-TITAN_GS_TOTAL = "Total"
+-- *** Tooltip variables
+TOOLTIP_HEADLINE = "GearStat"
+GEARTYPE_ARMOR = "Armor"
+GEARTYPE_WEAPON = "Weapon"
+ITEMTEXT_ILVL = "Item Level"
+TOOLTIP_TEXTLEFT = "TextLeft"
+GS_TEXT_PLAYER = "player"

@@ -18,7 +18,7 @@ function GS_CharFrame_OnShow(self, playerName)
   SetPortraitTexture(GS_CharFramePaperDollFramePortrait, "player");
   GS_CharFrameDressUpFrameTitleText:SetText(playerName);
 
-  local playerRecord = GS_GetPlayerRecord(playerName);
+  local playerRecord = getPlayerRecord(playerName);
   CfDebug("Name: "..playerName..", Level: "..playerRecord.playerLevel..", "..playerRecord.race..", "..playerRecord.class, 0);
 
   GS_CharFrameDressUpFrameDescriptionText:SetText("Level "..playerRecord.playerLevel.." "..playerRecord.race.." "..playerRecord.class);
@@ -30,20 +30,20 @@ function GS_CharFrame_OnShow(self, playerName)
   GS_CharFrameDressUpBackgroundBotLeft:SetTexture(texture..3);
   GS_CharFrameDressUpBackgroundBotRight:SetTexture(texture..4);
 
-  GS_CharFrameDressUpFrameAverageScore:SetText(GS_CHARFRAME_AVERAGESCORE..": i"..format("%.0f", playerRecord.averageItemLevel).." ("..format("%.0f", playerRecord.averageItemScore)..")");
-  GS_CharFrameDressUpFrameTotalScore:SetText(GS_CHARFRAME_TOTALSCORE..": i"..format("%.0f", playerRecord.totalItemLevel).." ("..format("%.0f", playerRecord.totalItemScore)..")");
+  GS_CharFrameDressUpFrameAverageScore:SetText(CHARFRAME_AVERAGE_SCORE ..": i"..format("%.0f", playerRecord.averageItemLevel).." ("..format("%.0f", playerRecord.averageItemScore)..")");
+  GS_CharFrameDressUpFrameTotalScore:SetText(CHARFRAME_TOTAL_SCORE ..": i"..format("%.0f", playerRecord.totalItemLevel).." ("..format("%.0f", playerRecord.totalItemScore)..")");
 
-  for index in ipairs(GS_GEARLIST) do 
+  for index in ipairs(GEARLIST) do
     CfDebug("ready to update gear, index: "..index, 0)
-    local itemColor = GS_colorNone;
+    local itemColor = colorNone;
     local itemScore = 0;    
-    local slotName = GS_GEARLIST[index].name;
+    local slotName = GEARLIST[index].name;
     CfDebug("Slot: "..slotName, 0);
     button = _G["GS_Character"..slotName];
 
     CfDebug("playerRecord.itemList[slotName].itemName "..playerRecord.itemList[slotName].itemName, 0);
     
-    if(playerRecord.itemList and playerRecord.itemList[slotName] and playerRecord.itemList[slotName].itemName ~= GS_NO_ITEM_EQUIPPED) then
+    if(playerRecord.itemList and playerRecord.itemList[slotName] and playerRecord.itemList[slotName].itemName ~= TEXT_NO_ITEM_EQUIPPED) then
       CfDebug("creating "..playerRecord.itemList[slotName].itemName, 0);
       button.link = playerRecord.itemList[slotName].itemLink;
       local itemRarity = playerRecord.itemList[slotName].itemRarity;
@@ -75,7 +75,7 @@ end
 -- **************************************************************************
 function CfDebug(Message, override)
   if (showCfDebug == 1 or override == 1) then
-    DEFAULT_CHAT_FRAME:AddMessage("|c"..GS_colorRed.."CharFrame: " .. Message);
+    DEFAULT_CHAT_FRAME:AddMessage("|c".. colorRed .."CharFrame: " .. Message);
   end
 end
 
@@ -102,7 +102,7 @@ function GS_ItemButton_OnEnter(self)
     if (GetItemInfo(self.link)) then
       GameTooltip:SetHyperlink(self.link);  -- if item slot button has link show it in tooltip 
     else
-      GameTooltip:SetText("|c"..GS_colorRed.."Potentially unsafe link|c"..GS_colorYellow.." - you may shift right click to view|nWARNING this may disconnect you from the server!");
+      GameTooltip:SetText("|c".. colorRed .."Potentially unsafe link|c".. colorYellow .." - you may shift right click to view|nWARNING this may disconnect you from the server!");
     end
   else
     GameTooltip:SetText(_G[self.slotName:upper()]); -- otherwise just show slot name
@@ -165,21 +165,21 @@ function GS_UpdateItemSlot(button, itemColor, itemLevel, itemScore, playerLevel,
     -- Only scan the item if it's in the users local cache, to avoid DC's
     if (GetItemInfo(button.link) and border) then
       -- Set Border Color
-      if (itemColor == GS_colorBlue) then
+      if (itemColor == colorBlue) then
         border:SetVertexColor(0.1255,0.8157,1);
-      elseif(itemColor == GS_colorGrey) then
+      elseif(itemColor == colorGrey) then
         border:SetVertexColor(0.6157,0.6157,0.6157);
-      elseif(itemColor == GS_colorWhite) then
+      elseif(itemColor == colorWhite) then
         border:SetVertexColor(1,1,1);
-      elseif(itemColor == GS_colorGreen) then
+      elseif(itemColor == colorGreen) then
         border:SetVertexColor(0.1176,1,0);
-      elseif(itemColor == GS_colorDarkBlue) then
+      elseif(itemColor == colorDarkBlue) then
         border:SetVertexColor(0,0.4392,0.8667);
-      elseif(itemColor == GS_colorPurple) then
+      elseif(itemColor == colorPurple) then
         border:SetVertexColor(0.6392,0.2078,0.9333);
-      elseif(itemColor == GS_colorOrange) then
+      elseif(itemColor == colorOrange) then
         border:SetVertexColor(1,0.502,0);
-      elseif(itemColor == GS_colorGold) then
+      elseif(itemColor == colorGold) then
         border:SetVertexColor(0.898,0.8,0.502);
       else
         border:SetVertexColor(0.502,0.502,0.502);
@@ -197,16 +197,16 @@ function GS_UpdateItemSlot(button, itemColor, itemLevel, itemScore, playerLevel,
   else
     CfDebug("no button link", 0);
     SetItemButtonTexture(button,button.backgroundTextureName);
-    for index in ipairs(GS_GEARLIST) do 
+    for index in ipairs(GEARLIST) do
       -- if empty slot and player can equip slot, hide ignoreOverlayer or
-      if(("GS_Character"..GS_GEARLIST[index].name) == button:GetName() and GS_GEARLIST[index].minLevel <= playerLevel) then
+      if(("GS_Character".. GEARLIST[index].name) == button:GetName() and GEARLIST[index].minLevel <= playerLevel) then
         ignoreOverlayer:Hide()
-      elseif(("GS_Character"..GS_GEARLIST[index].name) == button:GetName() and GS_GEARLIST[index].minLevel > playerLevel) then
+      elseif(("GS_Character".. GEARLIST[index].name) == button:GetName() and GEARLIST[index].minLevel > playerLevel) then
         ignoreOverlayer:Show()
       end
     end
     -- if offhand is empty and no twohand is equipped, hide overlayer
-    if(button:GetName() == ("GS_Character"..GEARSTAT_OFFHANDSLOT) and twoHand == true) then
+    if(button:GetName() == ("GS_Character".. GEARSLOT_OFFHAND) and twoHand == true) then
       ignoreOverlayer:Show()
     end
     border:Hide();

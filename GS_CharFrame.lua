@@ -199,3 +199,16 @@ function GS_UpdateItemSlot(button, itemColor, itemLevel, itemScore, playerLevel,
   end
 end
 
+-- **************************************************************************
+-- DESC : Show/hide the character window
+-- **************************************************************************
+function GS_CharFrame_Toggle()
+  debugMessage("Toggling Character frame", 0);
+
+  if (GS_CharFrame:IsVisible()) then
+    GS_CharFrame:Hide();
+  else
+    GS_CharFrame:Show();
+  end
+end
+

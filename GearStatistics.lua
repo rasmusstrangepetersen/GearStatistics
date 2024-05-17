@@ -161,19 +161,6 @@ function GS_OnUpdate(self, elapsed)
 end
 
 -- **************************************************************************
--- DESC : Show/hide the character window
--- **************************************************************************
-function GS_CharFrame_Toggle()
-  debugMessage("Toggling Character frame", 0);
-
-  if (GS_CharFrame:IsVisible()) then
-    GS_CharFrame:Hide();
-  else
-    GS_CharFrame:Show();
-  end
-end
-
--- **************************************************************************
 -- DESC : Update database with player stats
 -- **************************************************************************
 function updateGearScore(unit, override)

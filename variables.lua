@@ -34,7 +34,7 @@ GEARLIST = {
     { name = GEARSLOT_TRINKET2, desc = GEAR_TRINKET2, minLevel = 1 },
     { name = GEARSLOT_MAINHAND, desc = GEAR_MAINHAND, minLevel = 1  },
     { name = GEARSLOT_OFFHAND, desc = GEAR_OFFHAND, minLevel = 1  }
-}
+};
 
 -- set colors to match rarity
 ITEM_RARITY = {
@@ -47,7 +47,7 @@ ITEM_RARITY = {
     { name= RARITY_ARTIFACT, color= colorGold },
     { name= RARITY_HEIRLOOM, color= colorGold },
     { name= RARITY_UNKNOWN, color= colorBlue },
-}
+};
 
 -- *** Gear stattypes
 STATTYPES = {
@@ -63,7 +63,7 @@ STATTYPES = {
     { text = STATYPE_BLOCK },
     { text = STATYPE_DODGE },
     { text = STATYPE_AVOID }
-}
+};
 
 -- *** Legion artifact weapons
 ARTIFACT_WEAPONS = {
@@ -85,7 +85,7 @@ ARTIFACT_WEAPONS = {
     { text = ARTIFACT_ROGUE_OUTLAW },
     { text = ARTIFACT_ROGUE_ASSASSINATION },
     { text = ARTIFACT_DK_FROST }
-}
+};
 
 -- *** Two hand weapons
 TWOHAND_WEAPONS = {
@@ -98,4 +98,4 @@ TWOHAND_WEAPONS = {
     { text = TWOHAND_CROSSBOWS },
     { text = TWOHAND_GUNS },
     { text = TWOHAND_FISHING_POLES }
-}
+};

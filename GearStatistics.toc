@@ -2,6 +2,7 @@
 ## Title: GearStatistics |cff00aa0011.0.0|r
 ## Notes: Gives a score for your gear and color codes gear based on your equipped gear.
 ## Author: Dornonville
+## IconTexture: Interface\Icons\INV_Chest_Samurai
 ## SavedVariables: GS
 ## Dependencies:
 ## Version: 11.0.0
@@ -10,12 +11,11 @@
 ## X-CompatibleLocales: enUS, enGB
 ## X-Category: Tooltip
 
+Locales\localizationEn.lua
+
+variables.lua
+toolTip.lua
+
 GearStatistics.xml
 GS_CharFrame.xml
 GS_CharFrameGear.xml
-
-toolTip.lua
-variables.lua
-
-# Locale files
-Locales\localizationEn.lua

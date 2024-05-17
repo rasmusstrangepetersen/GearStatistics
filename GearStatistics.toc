@@ -17,5 +17,5 @@ GS_CharFrameGear.xml
 toolTip.lua
 variables.lua
 
-## Locale files
+# Locale files
 Locales\localizationEn.lua

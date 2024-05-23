@@ -99,3 +99,13 @@ TWOHAND_WEAPONS = {
     { text = TWOHAND_GUNS },
     { text = TWOHAND_FISHING_POLES }
 };
+
+-- iLevel difference in percentage - mapped to shown color
+-- table must be ordered decending by limit for the function to work correctly
+AVG_GEAR_ILVL_COLOR_LIMIT = {
+    { color= colorGrey,     limit=20 },
+    { color= colorWhite,    limit=10 },
+    { color= colorGreen,    limit=5 },
+    { color= colorDarkBlue, limit=1 },
+    { color= colorPurple,   limit=0 }
+};

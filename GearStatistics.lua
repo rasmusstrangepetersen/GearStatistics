@@ -1,5 +1,5 @@
 -- *** Version information
-VERSION = "11.0.0";
+VERSION = "11.0.1";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -290,17 +290,20 @@ function updateCurrentPlayerItemList(unit)
   local totalItemLevel = 0;
   local averageItemScore = 0;
   local averageItemLevel = 0;
+  local minItemLevel = 0;
+  local maxItemLevel = 0;
   local twoHandWeapon = false;
   local unitLevel = UnitLevel(unit);
   local missingText = "";
   local legionArtifact = 0;
   GS.currentPlayer.itemList = {};
+  local itemLevel = 0;
   
   for index in ipairs(GEARLIST) do
     GEARLIST[index].id = GetInventorySlotInfo(GEARLIST[index].name);
     local slotLink = GetInventoryItemLink(unit, GEARLIST[index].id);
     if (slotLink ~= nil) then
-      local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType = GetItemInfo(slotLink);
+      local itemName, itemLink, itemRarity, iLvl, itemMinLevel, itemType, itemSubType = GetItemInfo(slotLink);
       local itemScore = 0;
       legionArtifact = legionArtifact + isLegionArtifactWeapon(GEARLIST[index].desc, itemName);
 
@@ -321,7 +324,17 @@ function updateCurrentPlayerItemList(unit)
 
         missingText = missingText..enchantText..gemText;
         totalItemScore = totalItemScore + itemScore;
+        -- fix for itemlevels with '+', eg. 385+
+        string.gsub(iLvl, "+", "")
+        itemLevel = tonumber(iLvl)
+
         totalItemLevel = totalItemLevel + itemLevel;
+        if(itemLevel < minItemLevel and itemLevel > 0) then
+          minItemLevel = itemLevel
+        end
+        if(itemLevel > maxItemLevel) then
+          maxItemLevel = itemLevel
+        end
 
         -- Update cache
         GS.currentPlayer.itemList[GEARLIST[index].name] = {};
@@ -385,6 +398,8 @@ function updateCurrentPlayerItemList(unit)
   end
   GS.currentPlayer.averageItemScore = averageItemScore;
   GS.currentPlayer.averageItemLevel = averageItemLevel;
+  GS.currentPlayer.minItemLevel = minItemLevel;
+  GS.currentPlayer.maxItemLevel = maxItemLevel;
   GS.currentPlayer.totalItemScore = totalItemScore;
   GS.currentPlayer.totalItemLevel = totalItemLevel;
   
@@ -492,12 +507,6 @@ end
 
 -- **************************************************************************
 -- DESC : Get color for tooltip, based on the players average ilvl and the items iLlv
--- Red:    + 20 iLevels
--- Orange: + 10 iLevels
--- Yellow: + 3  iLevels
--- Green:  - 3 -> +3 (average)
--- White:  - 3 iLevels
--- Grey:   - 10 iLevels
 -- **************************************************************************
 function getLevelColor(itemLevel, playerAverageItemLevel)
   local color = colorBlue;
@@ -505,31 +514,38 @@ function getLevelColor(itemLevel, playerAverageItemLevel)
   if (itemLevel == nil or playerAverageItemLevel == nil) then
     return colorBlue;
   end
-  
+
   -- fix for itemlevels with '+', eg. 385+
   string.gsub(itemLevel, "+", "")
   local iLvl = tonumber(itemLevel)
   local iLevelDiff = (iLvl-playerAverageItemLevel);
   debugMessage("iLevelDiff: "..iLevelDiff, 0)
 
-  if (iLevelDiff >= 20) then
-    color = colorRed;
-  elseif (iLevelDiff < 20 and iLevelDiff >= 10) then
-    color = colorOrange;
-  elseif (iLevelDiff < 10 and iLevelDiff >= 3) then
-    color = colorYellow;
-  elseif (iLevelDiff < 3 and iLevelDiff >-3) then
-    color = colorGreen;
-  elseif (iLevelDiff <= -3 and iLevelDiff >=-10) then
-    color = colorWhite;
-  else
-    color = colorGrey;
+  for index in ipairs(AVG_GEAR_ILVL_COLOR_LIMIT) do
+    if (iLevelDiff > AVG_GEAR_ILVL_COLOR_LIMIT[index].limit) then
+      return AVG_GEAR_ILVL_COLOR_LIMIT[index].color;
+    end
   end
 
-  debugMessage("Get level color for itemLevel: "..iLvl..", playerAverageItemLevel: "..playerAverageItemLevel..", ".."|c"..color.."returning this color", 0);
-  
   return color;
-end 
+end
+
+-- **************************************************************************
+-- DESC :Get  color for tooltip, based on the difference in ilvl for the players equipped gear
+-- colors and limits for colors defined in variables.lua AVG_GEAR_ILVL_COLOR_LIMIT
+-- the function is used by TitanGearStatistics
+-- **************************************************************************
+function calculateColorTitan(iLevelDiff)
+  local color = colorBlue;
+
+  for index in ipairs(AVG_GEAR_ILVL_COLOR_LIMIT) do
+    if (iLevelDiff > AVG_GEAR_ILVL_COLOR_LIMIT[index].limit) then
+      return AVG_GEAR_ILVL_COLOR_LIMIT[index].color;
+    end
+  end
+
+  return color;
+end
 
 -- **************************************************************************
 -- DESC : DEBUG, show detailed information
@@ -548,6 +564,8 @@ function showCurrentPlayerData()
   DEFAULT_CHAT_FRAME:AddMessage("totalItemScore: "..GS.currentPlayer.totalItemScore);
   DEFAULT_CHAT_FRAME:AddMessage("averageItemLevel: "..GS.currentPlayer.averageItemLevel);
   DEFAULT_CHAT_FRAME:AddMessage("averageItemScore: "..GS.currentPlayer.averageItemScore);
+  DEFAULT_CHAT_FRAME:AddMessage("minItemLevel: "..GS.currentPlayer.minItemLevel);
+  DEFAULT_CHAT_FRAME:AddMessage("maxItemLevel: "..GS.currentPlayer.maxItemLevel);
   DEFAULT_CHAT_FRAME:AddMessage("recordedTime: "..GS.currentPlayer.recordedTime);
   for index in ipairs(GEARLIST) do
     if(GS.currentPlayer.itemList[GEARLIST[index].name].itemName) then

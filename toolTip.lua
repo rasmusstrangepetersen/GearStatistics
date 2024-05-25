@@ -13,8 +13,38 @@ function hookTooltips()
 	  	 tooltip:AddDoubleLine(TOOLTIP_HEADLINE ..":", gearScoreText);
 	 end
   end
-	
-  TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, addGearstatToTooltip)
+
+  if GSaddOn.isRetail then
+    TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, addGearstatToTooltip)
+  elseif GSaddOn.isClassic then
+    --- TODO fix classic tooltip, for know make titan plugin work
+    GameTooltip:HookScript("OnShow", GS_Tooltip_OnShow);
+  -- GameTooltip:HookScript("OnTooltipSetItem", GS_Tooltip_OnGameTooltipSetItem)
+    GameTooltip:HookScript("OnHide", GS_Tooltip_OnHide)
+
+  --  WorldMapTooltip:HookScript("OnShow", GS_Tooltip_OnShow);
+  --  WorldMapTooltip:HookScript("OnTooltipSetItem", GS_WorldMapTooltip_OnGameTooltipSetItem)
+  --  WorldMapTooltip:HookScript("OnHide", GS_Tooltip_OnHide)
+
+  --  ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", GS_RefTooltip1_OnRefTooltipSetItem);
+  --  ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", GS_RefTooltip2_OnRefTooltipSetItem);
+  --  ShoppingTooltip1:HookScript("OnTooltipSetItem", GS_RefTooltip1_OnRefTooltipSetItem);
+  --  ShoppingTooltip2:HookScript("OnTooltipSetItem", GS_RefTooltip2_OnRefTooltipSetItem);
+  end
+end
+
+-- **************************************************************************
+-- DESC : Show Tooltip
+-- **************************************************************************
+function GS_Tooltip_OnShow(tooltip, ...)
+  tooltip:Show()
+end
+
+-- **************************************************************************
+-- DESC : Show Tooltip
+-- **************************************************************************
+function GS_Tooltip_OnHide(tooltip, ...)
+  tooltip:Hide()
 end
 
 -- **************************************************************************
@@ -26,7 +56,7 @@ function getTooltipText(slotLink)
 
   if (slotLink) then
     -- only add text to weapons and armor 
-    debugMessage("getTooltipText: entering slotlink", 0)
+    debugMessage("getTooltipText: entering slot-link", 0)
     local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, maxStack, equipSlot, texture, vendorprice = GetItemInfo(slotLink);
     if(itemType == GEARTYPE_ARMOR or itemType == GEARTYPE_WEAPON) then
       local iLevel = getItemLevel(slotLink)
@@ -115,7 +145,7 @@ function scanTooltip(scantip, searchstring)
 end
 
 -- **************************************************************************
--- DESC : Check if the tooltip is ingame
+-- DESC : Check if the tooltip is in-game
 -- **************************************************************************
 function isTooltipUsable(scantip)
   

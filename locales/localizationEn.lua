@@ -1,8 +1,10 @@
 if GetLocale() ~= "enUS" then return end -- When adding a new language, remember to add the localization file to the .toc file
 
 -- *** Version information
-VERSION_TEXT = "GearStatistics version: ";
-VERSION_WOWVERSION = " - Dragonflight"
+VERSION_TEXT = "GearStatistics version: "
+VERSION_RETAIL = " - Dragonflight"
+VERSION_CLASSIC = " - Classic SoD"
+VERSION_UNSUPPORTED = " - Unsupported/untested WOW client"
 
 -- *** AddOn information - chat messages
 CMD_VERSION = "version"
@@ -55,7 +57,7 @@ GEAR_TRINKET2 = "2nd Trinket"
 GEAR_MAINHAND = "Main Hand"
 GEAR_OFFHAND = "Off Hand"
 
--- *** Gearslots
+-- *** Gears lots
 GEARSLOT_HEAD = "HeadSlot"
 GEARSLOT_NECK = "NeckSlot"
 GEARSLOT_SHOULDERS = "ShoulderSlot"
@@ -77,17 +79,17 @@ GEARSLOT_OFFHAND = "SecondaryHandSlot"
 
 -- *** stattypes
 STATTYPE_ARMOR = "Armor"
-STATYPE_STA = "Stamina"
-STATYPE_INT = "Intellect"
-STATYPE_AGI = "Agility"
-STATYPE_STR = "Strength"
-STATYPE_CRIT = "Critical Strike"
-STATYPE_MASTERY = "Mastery"
-STATYPE_VER = "Versatility"
-STATYPE_HASTE = "Haste"
-STATYPE_BLOCK = "Block"
-STATYPE_DODGE = "Dodge"
-STATYPE_AVOID = "Avoidance"
+STATTYPE_STA = "Stamina"
+STATTYPE_INT = "Intellect"
+STATTYPE_AGI = "Agility"
+STATTYPE_STR = "Strength"
+STATTYPE_CRIT = "Critical Strike"
+STATTYPE_MASTERY = "Mastery"
+STATTYPE_VER = "Versatility"
+STATTYPE_HASTE = "Haste"
+STATTYPE_BLOCK = "Block"
+STATTYPE_DODGE = "Dodge"
+STATTYPE_AVOID = "Avoidance"
 
 -- *** Legion artifact weapons, dual wield but 1 weapon 
 ARTIFACT_DH_HAVOC = "Twinblades of the Deceiver"

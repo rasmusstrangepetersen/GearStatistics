@@ -18,7 +18,6 @@ function GS_CharFrame_OnShow(self, playerName)
   GS_CharFrameDressUpFrameTitleText:SetText(playerName);
 
   local playerRecord = getPlayerRecord(playerName);
-  debugMessage("Name: "..playerName..", Level: "..playerRecord.playerLevel..", "..playerRecord.race..", "..playerRecord.class, 0);
 
   GS_CharFrameDressUpFrameDescriptionText:SetText("Level "..playerRecord.playerLevel.." "..playerRecord.race.." "..playerRecord.class);
   GS_CharFrameDressUpFrameGuildText:SetText(playerRecord.guild)
@@ -106,7 +105,7 @@ function GS_ItemButton_OnLeave(self)
 end
 
 -- **************************************************************************
--- DESC : Enable chatlink and dressup
+-- DESC : Enable chat-link and dress-up
 -- **************************************************************************
 function GS_ItemButton_OnClick(self,button)
   if( button == "LeftButton" and self.link) then

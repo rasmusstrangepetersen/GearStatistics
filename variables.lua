@@ -1,5 +1,15 @@
 --- Tables and colors used in the code
 
+-- *** Active version
+if GSaddOn.isRetail then
+    VERSION_WOWVERSION = VERSION_RETAIL
+elseif GSaddOn.isClassic then
+    VERSION_WOWVERSION = VERSION_CLASSIC
+else
+    VERSION_WOWVERSION = VERSION_UNSUPPORTED
+end
+VERSION = VERSION_WOWVERSION
+
 -- *** Used colors ***
 colorRed        = "ffff0000"; -- red DEBUG text color and red gear (best)
 colorOrange     = "ffff8000"; -- orange chat headline color and orange gear
@@ -8,13 +18,13 @@ colorGreen      = "ff1eff00"; -- green gear, uncommon
 colorWhite      = "ffffffff"; -- white gear, common
 colorGrey       = "ff9d9d9d"; -- grey gear (worst)
 colorBlue       = "ff20d0ff"; -- unknown gear, light blue
-colorNone       = "ff808080";  -- default border color for gearslots on CharFrame
+colorNone       = "ff808080";  -- default border color for gears-lots on CharFrame
 colorBlack      = "ff000000";
 colorDarkBlue   = "ff0070dd";  -- item ITEM_RARITY rare dark blue
 colorPurple     = "ffa335ee";  -- item ITEM_RARITY epic purple
 colorGold       = "ffe5cc80";  -- item ITEM_RARITY artifact/heirloom gold
 
--- *** geartable
+-- *** gear table
 GEARLIST = {
     { name = GEARSLOT_HEAD, desc = GEAR_HEAD, minLevel = 1 },
     { name = GEARSLOT_NECK, desc = GEAR_NECK, minLevel = 1 },
@@ -49,20 +59,20 @@ ITEM_RARITY = {
     { name= RARITY_UNKNOWN, color= colorBlue },
 };
 
--- *** Gear stattypes
+-- *** Gear stat types
 STATTYPES = {
     { text = STATTYPE_ARMOR },
-    { text = STATYPE_STA },
-    { text = STATYPE_INT },
-    { text = STATYPE_AGI },
-    { text = STATYPE_STR },
-    { text = STATYPE_CRIT },
-    { text = STATYPE_MASTERY },
-    { text = STATYPE_VER },
-    { text = STATYPE_HASTE },
-    { text = STATYPE_BLOCK },
-    { text = STATYPE_DODGE },
-    { text = STATYPE_AVOID }
+    { text = STATTYPE_STA },
+    { text = STATTYPE_INT },
+    { text = STATTYPE_AGI },
+    { text = STATTYPE_STR },
+    { text = STATTYPE_CRIT },
+    { text = STATTYPE_MASTERY },
+    { text = STATTYPE_VER },
+    { text = STATTYPE_HASTE },
+    { text = STATTYPE_BLOCK },
+    { text = STATTYPE_DODGE },
+    { text = STATTYPE_AVOID }
 };
 
 -- *** Legion artifact weapons
@@ -101,11 +111,11 @@ TWOHAND_WEAPONS = {
 };
 
 -- iLevel difference in percentage - mapped to shown color
--- table must be ordered decending by limit for the function to work correctly
+-- table must be ordered descending by limit for the function to work correctly
 AVG_GEAR_ILVL_COLOR_LIMIT = {
-    { color= colorGrey,     limit=20 },
-    { color= colorWhite,    limit=10 },
-    { color= colorGreen,    limit=5 },
-    { color= colorDarkBlue, limit=1 },
-    { color= colorPurple,   limit=0 }
+    { color= colorGold,     limit=15 },
+    { color= colorPurple,   limit=9 },
+    { color= colorDarkBlue, limit=3 },
+    { color= colorGreen,    limit=-3 },
+    { color= colorWhite,    limit=-9 }
 };

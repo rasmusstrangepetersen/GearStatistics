@@ -1,0 +1,13 @@
+<Ui>
+	<Script file="locales\localizationEn.lua"/>
+
+	<Script file="version.lua"/>
+	<Script file="variables.lua"/>
+	<Script file="toolTip.lua"/>
+	<Script file="GearStatistics.lua"/>
+	<Script file="GS_CharFrame.lua"/>
+
+	<Include file="frames\GS_Frame.xml"/>
+	<Include file="frames\GS_CharFrame.xml"/>
+	<Include file="frames\GS_CharFrameGear.xml"/>
+</Ui>

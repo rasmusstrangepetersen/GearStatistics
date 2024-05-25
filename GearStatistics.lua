@@ -1,5 +1,5 @@
 -- *** Version information
-VERSION = "11.0.1";
+REVISION = "11.0.1";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -81,11 +81,11 @@ function initialise()
     GS.currentPlayer = {};
     GS.Data = {};
   end
-  if(GS.Data.version == nil or not (GS.Data.version == VERSION)) then
+  if(GS.Data.version == nil or not (GS.Data.version == REVISION)) then
     GS = {};
     GS.currentPlayer = {};
     GS.Data = {}; -- zap all prior history if not current version
-    GS.Data.version = VERSION;
+    GS.Data.version = REVISION;
     GS.Data.lastUpdated = time();
   end
   GS.thisRealm = GetRealmName();
@@ -104,7 +104,7 @@ function initialise()
   
   updateFrame:SetScript("OnUpdate", GS_OnUpdate)
   debugMessage("slash registered", 0);
-  DEFAULT_CHAT_FRAME:AddMessage("|c".. colorOrange .."".. TEXT_LOADED .. VERSION .. TEXT_USE_COMMANDS);
+  DEFAULT_CHAT_FRAME:AddMessage("|c".. colorOrange .."".. TEXT_LOADED .. REVISION .. VERSION_WOWVERSION.. TEXT_USE_COMMANDS);
 end
 
 -- **************************************************************************
@@ -116,7 +116,7 @@ function slashCommandHandler(msg)
   -- handles slash commands
   msg = string.lower(msg)
   if(msg == CMD_VERSION) then
-    DEFAULT_CHAT_FRAME:AddMessage("|c".. colorYellow .. VERSION_TEXT .. VERSION .. VERSION_WOWVERSION);
+    DEFAULT_CHAT_FRAME:AddMessage("|c".. colorYellow .. VERSION_TEXT .. REVISION .. VERSION_WOWVERSION);
   elseif(msg == CMD_RELOADUI or msg == CMD_RL) then
     ReloadUI();
   elseif(msg == "debug") then
@@ -153,7 +153,7 @@ function GS_OnUpdate(self, elapsed)
     cycleNumber = 1;
   end
   if (timeCounter >= updateDelay and cycleNumber == 1) then
-    debugMessage("second update! - updating gear, timecounter: ".. timeCounter, 0)
+    debugMessage("second update! - updating gear, time-counter: ".. timeCounter, 0)
     updateGearScore("player", 1);
     timeCounter = 0
     updateFrame:SetScript("OnUpdate", nil)
@@ -228,13 +228,18 @@ end
 -- DESC : Update currentPlayers professions
 -- **************************************************************************
 function updateCurrentPlayerProfessions(unit)
+  --- TODO fix professions for classic
+  if(GSaddOn.isClassic) then
+    return
+  end
+
   if(unit == GS_TEXT_PLAYER) then
     GS.currentPlayer.professions = {}
   
     prof1, prof2, archaeology, fishing, cooking, firstAid = GetProfessions();
     if(prof1) then
       name1, texture1, rank1, maxRank1, numSpells1, spelloffset1, skillLine1, rankModifier1 = GetProfessionInfo(prof1)
-      debugMessage("\nProfession 1:\nName: "..name1.."\nTexture: "..texture1.."\nRank: "..rank1.."\nMax rank: "..maxRank1.."\nNum. spells: "..numSpells1.."\nSpellOffset: "..spelloffset1.."\nSkillline: "..skillLine1.."\nRankModifier: "..rankModifier1, 0)
+      debugMessage("\nProfession 1:\nName: "..name1.."\nTexture: "..texture1.."\nRank: "..rank1.."\nMax rank: "..maxRank1.."\nNum. spells: "..numSpells1.."\nSpellOffset: "..spelloffset1.."\nSkill-line: "..skillLine1.."\nRankModifier: "..rankModifier1, 0)
       GS.currentPlayer.professions.profession1 = {};
       GS.currentPlayer.professions.profession1.name = name1;
       GS.currentPlayer.professions.profession1.rank = rank1;
@@ -243,7 +248,7 @@ function updateCurrentPlayerProfessions(unit)
     end
     if(prof2) then
       name2, texture2, rank2, maxRank2, numSpells2, spelloffset2, skillLine2, rankModifier2 = GetProfessionInfo(prof2)
-      debugMessage("\nProfession 2:\nName: "..name2.."\nTexture: "..texture2.."\nRank: "..rank2.."\nMax rank: "..maxRank2.."\nNum. spells: "..numSpells2.."\nSpellOffset: "..spelloffset2.."\nSkillline: "..skillLine2.."\nRankModifier: "..rankModifier2, 0)
+      debugMessage("\nProfession 2:\nName: "..name2.."\nTexture: "..texture2.."\nRank: "..rank2.."\nMax rank: "..maxRank2.."\nNum. spells: "..numSpells2.."\nSpellOffset: "..spelloffset2.."\nSkill-line: "..skillLine2.."\nRankModifier: "..rankModifier2, 0)
       GS.currentPlayer.professions.profession2 = {};
       GS.currentPlayer.professions.profession2.name = name2;
       GS.currentPlayer.professions.profession2.rank = rank2;
@@ -252,7 +257,7 @@ function updateCurrentPlayerProfessions(unit)
     end
     if(archaeology) then
       name3, texture3, rank3, maxRank3, numSpells3, spelloffset3, skillLine3, rankModifier3 = GetProfessionInfo(archaeology)
-      debugMessage("\nArchaeology:\nName: "..name3.."\nTexture: "..texture3.."\nRank: "..rank3.."\nMax rank: "..maxRank3.."\nNum. spells: "..numSpells3.."\nSpellOffset: "..spelloffset3.."\nSkillline: "..skillLine3.."\nRankModifier: "..rankModifier3, 0)
+      debugMessage("\nArchaeology:\nName: "..name3.."\nTexture: "..texture3.."\nRank: "..rank3.."\nMax rank: "..maxRank3.."\nNum. spells: "..numSpells3.."\nSpellOffset: "..spelloffset3.."\nSkill-line: "..skillLine3.."\nRankModifier: "..rankModifier3, 0)
       GS.currentPlayer.professions.archaeology = {};
       GS.currentPlayer.professions.archaeology.name = name3;
       GS.currentPlayer.professions.archaeology.rank = rank3;
@@ -261,7 +266,7 @@ function updateCurrentPlayerProfessions(unit)
     end
     if(fishing) then
       name4, texture4, rank4, maxRank4, numSpells4, spelloffset4, skillLine4, rankModifier4 = GetProfessionInfo(fishing)
-      debugMessage("\nFishing:\nName: "..name4.."\nTexture: "..texture4.."\nRank: "..rank4.."\nMax rank: "..maxRank4.."\nNum. spells: "..numSpells4.."\nSpellOffset: "..spelloffset4.."\nSkillline: "..skillLine4.."\nRankModifier: "..rankModifier4, 0)
+      debugMessage("\nFishing:\nName: "..name4.."\nTexture: "..texture4.."\nRank: "..rank4.."\nMax rank: "..maxRank4.."\nNum. spells: "..numSpells4.."\nSpellOffset: "..spelloffset4.."\nSkill-line: "..skillLine4.."\nRankModifier: "..rankModifier4, 0)
       GS.currentPlayer.professions.fishing = {};
       GS.currentPlayer.professions.fishing.name = name4;
       GS.currentPlayer.professions.fishing.rank = rank4;
@@ -270,7 +275,7 @@ function updateCurrentPlayerProfessions(unit)
     end
     if(cooking) then
       name5, texture5, rank5, maxRank5, numSpells5, spelloffset5, skillLine5, rankModifier5 = GetProfessionInfo(cooking)
-      debugMessage("\nCooking:\nName: "..name5.."\nTexture: "..texture5.."\nRank: "..rank5.."\nMax rank: "..maxRank5.."\nNum. spells: "..numSpells5.."\nSpellOffset: "..spelloffset5.."\nSkillline: "..skillLine5.."\nRankModifier: "..rankModifier5, 0)
+      debugMessage("\nCooking:\nName: "..name5.."\nTexture: "..texture5.."\nRank: "..rank5.."\nMax rank: "..maxRank5.."\nNum. spells: "..numSpells5.."\nSpellOffset: "..spelloffset5.."\nSkill-line: "..skillLine5.."\nRankModifier: "..rankModifier5, 0)
       GS.currentPlayer.professions.cooking = {};
       GS.currentPlayer.professions.cooking.name = name5;
       GS.currentPlayer.professions.cooking.rank = rank5;
@@ -311,25 +316,26 @@ function updateCurrentPlayerItemList(unit)
         local enchantScore, enchantText = getItemEnchantScore(slotLink)
         local gemScore, gemText = getItemGemScore(slotLink)
         itemScore = getItemScore(slotLink) + enchantScore + gemScore
-      
+
         -- compensate for 2H weapons
         if(isWeaponTwoHand(itemSubType) == 1) then
-          -- compensate for warrior with dual 2H weapons equipped
-          if(twoHandWeapon == true) then
+          twoHandWeapon = true;
+        end
+        -- compensate for warrior with dual 2H weapons equipped, show both
+        if (twoHandWeapon and GEARLIST[index].name == GEARSLOT_OFFHAND) then
             twoHandWeapon = false;
-          else    
-            twoHandWeapon = true;
-          end
         end
 
         missingText = missingText..enchantText..gemText;
         totalItemScore = totalItemScore + itemScore;
-        -- fix for itemlevels with '+', eg. 385+
+        -- fix for item-levels with '+', eg. 385+
         string.gsub(iLvl, "+", "")
         itemLevel = tonumber(iLvl)
 
         totalItemLevel = totalItemLevel + itemLevel;
-        if(itemLevel < minItemLevel and itemLevel > 0) then
+        if (minItemLevel == 0 and itemLevel > 0 and GEARLIST[index].minLevel > 0) then
+          minItemLevel = itemLevel
+        elseif(itemLevel < minItemLevel and itemLevel > 0 and GEARLIST[index].minLevel > 0) then
           minItemLevel = itemLevel
         end
         if(itemLevel > maxItemLevel) then
@@ -411,10 +417,8 @@ end
 --         in order to only show ilvl and score for 1 slot, main or offhand, depending on the weapon
 -- **************************************************************************
 function isLegionArtifactWeapon(itemSlot, itemName)
-  
-  debugMessage("Legion artifact, slot: "..itemSlot.." - itemName: "..itemName, 0)
-
   if(itemSlot and itemName and (itemSlot == GEAR_OFFHAND or itemSlot == GEAR_MAINHAND)) then
+    debugMessage("Legion artifact, slot: "..itemSlot.." - itemName: "..itemName, 0)
     for index in ipairs(ARTIFACT_WEAPONS) do
       for w in gmatch(itemName, ARTIFACT_WEAPONS[index].text) do
         return 1;
@@ -483,7 +487,10 @@ function isWeaponTwoHand(itemSubType)
   debugMessage("itemSubType: "..itemSubType, 0)
 
   for index in ipairs(TWOHAND_WEAPONS) do
-    for w in gmatch(itemSubType, TWOHAND_WEAPONS[index].text) do
+    debugMessage("Loop - itemSubType: "..itemSubType, 0)
+    debugMessage("Loop - match value: "..TWOHAND_WEAPONS[index].text, 0)
+    if (itemSubType == TWOHAND_WEAPONS[index].text) then
+      debugMessage("Match found", 0)
       return 1;
     end
   end
@@ -509,25 +516,16 @@ end
 -- DESC : Get color for tooltip, based on the players average ilvl and the items iLlv
 -- **************************************************************************
 function getLevelColor(itemLevel, playerAverageItemLevel)
-  local color = colorBlue;
+  local color = colorGrey;
 
   if (itemLevel == nil or playerAverageItemLevel == nil) then
     return colorBlue;
   end
 
-  -- fix for itemlevels with '+', eg. 385+
-  string.gsub(itemLevel, "+", "")
-  local iLvl = tonumber(itemLevel)
-  local iLevelDiff = (iLvl-playerAverageItemLevel);
-  debugMessage("iLevelDiff: "..iLevelDiff, 0)
+  local iLevelDiffPct = 100*(itemLevel-playerAverageItemLevel)/playerAverageItemLevel;
+  debugMessage("iLevelDiffPct: ".. iLevelDiffPct, 0)
 
-  for index in ipairs(AVG_GEAR_ILVL_COLOR_LIMIT) do
-    if (iLevelDiff > AVG_GEAR_ILVL_COLOR_LIMIT[index].limit) then
-      return AVG_GEAR_ILVL_COLOR_LIMIT[index].color;
-    end
-  end
-
-  return color;
+  return calculateColor(iLevelDiffPct);
 end
 
 -- **************************************************************************
@@ -535,8 +533,12 @@ end
 -- colors and limits for colors defined in variables.lua AVG_GEAR_ILVL_COLOR_LIMIT
 -- the function is used by TitanGearStatistics
 -- **************************************************************************
-function calculateColorTitan(iLevelDiff)
-  local color = colorBlue;
+function calculateColor(iLevelDiff)
+  local color = colorGrey;
+
+  if (iLevelDiff == nil) then
+    return colorBlue;
+  end
 
   for index in ipairs(AVG_GEAR_ILVL_COLOR_LIMIT) do
     if (iLevelDiff > AVG_GEAR_ILVL_COLOR_LIMIT[index].limit) then
@@ -567,6 +569,7 @@ function showCurrentPlayerData()
   DEFAULT_CHAT_FRAME:AddMessage("minItemLevel: "..GS.currentPlayer.minItemLevel);
   DEFAULT_CHAT_FRAME:AddMessage("maxItemLevel: "..GS.currentPlayer.maxItemLevel);
   DEFAULT_CHAT_FRAME:AddMessage("recordedTime: "..GS.currentPlayer.recordedTime);
+  DEFAULT_CHAT_FRAME:AddMessage("twohand: "..tostring(GS.currentPlayer.twoHandWeapon));
   for index in ipairs(GEARLIST) do
     if(GS.currentPlayer.itemList[GEARLIST[index].name].itemName) then
       DEFAULT_CHAT_FRAME:AddMessage("itemList: "..GS.currentPlayer.itemList[GEARLIST[index].name].itemName);

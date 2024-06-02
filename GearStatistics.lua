@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.0.1";
+REVISION = "11.0.3";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -309,6 +309,8 @@ function updateCurrentPlayerItemList(unit)
     local slotLink = GetInventoryItemLink(unit, GEARLIST[index].id);
     if (slotLink ~= nil) then
       local itemName, itemLink, itemRarity, iLvl, itemMinLevel, itemType, itemSubType = GetItemInfo(slotLink);
+      local effectiveILvl, isPreview, baseILvl = GetDetailedItemLevelInfo(itemLink)
+      iLvl = effectiveILvl
       local itemScore = 0;
       legionArtifact = legionArtifact + isLegionArtifactWeapon(GEARLIST[index].desc, itemName);
 
@@ -323,7 +325,7 @@ function updateCurrentPlayerItemList(unit)
         end
         -- compensate for warrior with dual 2H weapons equipped, show both
         if (twoHandWeapon and GEARLIST[index].name == GEARSLOT_OFFHAND) then
-            twoHandWeapon = false;
+          twoHandWeapon = false;
         end
 
         missingText = missingText..enchantText..gemText;

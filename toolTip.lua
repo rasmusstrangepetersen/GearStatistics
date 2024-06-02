@@ -50,35 +50,6 @@ end
 -- **************************************************************************
 -- DESC : Returns the text to add to the ToolTip
 -- **************************************************************************
-function getTooltipText(slotLink)
-  local text = "";
-  local success = 0;
-
-  if (slotLink) then
-    -- only add text to weapons and armor 
-    debugMessage("getTooltipText: entering slot-link", 0)
-    local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, maxStack, equipSlot, texture, vendorprice = GetItemInfo(slotLink);
-    if(itemType == GEARTYPE_ARMOR or itemType == GEARTYPE_WEAPON) then
-      local iLevel = getItemLevel(slotLink)
-      local levelColor = getLevelColor(iLevel, GS.currentPlayer.averageItemLevel);
-      local enchantScore, enchantText = getItemEnchantScore(slotLink)
-      local gemScore, gemText = getItemGemScore(slotLink)
-      local itemScore = getItemScore(slotLink) + enchantScore + gemScore
-              
-      debugMessage("itemLevel: "..itemLevel.."  ilvl: "..iLevel, 0);
-      if(iLevel ~= "0") then
-        text = TOOLTIP_HEADLINE ..": ".."|c"..levelColor.."i"..iLevel.." ("..format("%.0f", itemScore)..")"
-        end
-        success = 1;
-      end
-    end
-    
-    return text, success;
-  end
-
--- **************************************************************************
--- DESC : Returns the text to add to the ToolTip
--- **************************************************************************
 function getTooltipText2(tooltip)
   local iName, iLink = TooltipUtil.GetDisplayedItem(tooltip);
   local text;

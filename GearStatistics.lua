@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.0.3";
+REVISION = "11.0.4";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -314,7 +314,7 @@ function updateCurrentPlayerItemList(unit)
       local itemScore = 0;
       legionArtifact = legionArtifact + isLegionArtifactWeapon(GEARLIST[index].desc, itemName);
 
-      if(GEARLIST[index].minLevel >= 0 and itemLink and isLegionArtifactWeapon(GEARLIST[index].desc, itemName) == 0) then
+      if(GEARLIST[index].minLevel >= 0 and itemLink) then
         local enchantScore, enchantText = getItemEnchantScore(slotLink)
         local gemScore, gemText = getItemGemScore(slotLink)
         itemScore = getItemScore(slotLink) + enchantScore + gemScore
@@ -386,7 +386,7 @@ function updateCurrentPlayerItemList(unit)
   local itemCount = getMaxItemsForLevel(unitLevel);
 
   -- compensate for two hand weapon
-  if(twoHandWeapon == true or legionArtifact == 1) then
+  if(twoHandWeapon == true or legionArtifact > 0) then
     itemCount = itemCount -1;
     GS.currentPlayer.twoHandWeapon = true;
   end
@@ -415,14 +415,15 @@ function updateCurrentPlayerItemList(unit)
 end
 
 -- **************************************************************************
--- DESC : Returns true, if the weapon is a legion artifact (two hand equipped as 1-hand). 
+-- DESC : Returns 1, if the weapon is a legion artifact (two hand equipped as 1-hand).
 --         in order to only show ilvl and score for 1 slot, main or offhand, depending on the weapon
 -- **************************************************************************
 function isLegionArtifactWeapon(itemSlot, itemName)
   if(itemSlot and itemName and (itemSlot == GEAR_OFFHAND or itemSlot == GEAR_MAINHAND)) then
     debugMessage("Legion artifact, slot: "..itemSlot.." - itemName: "..itemName, 0)
     for index in ipairs(ARTIFACT_WEAPONS) do
-      for w in gmatch(itemName, ARTIFACT_WEAPONS[index].text) do
+      if (itemName == ARTIFACT_WEAPONS[index].text) then
+        debugMessage("Legion weapon found", 0)
         return 1;
       end
     end

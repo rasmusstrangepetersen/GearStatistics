@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.0.5";
+REVISION = "11.1.0";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -309,7 +309,7 @@ function updateCurrentPlayerItemList(unit)
     local slotLink = GetInventoryItemLink(unit, GEARLIST[index].id);
     if (slotLink ~= nil) then
       local itemName, itemLink, itemRarity, iLvl, itemMinLevel, itemType, itemSubType = GetItemInfo(slotLink);
-      if(itemLink ~= nil) then
+      if(itemLink ~= nil and (itemType == GEARTYPE_ARMOR or itemType == GEARTYPE_WEAPON)) then
         local actualItemLevel, previewLevel, sparseItemLevel = GetDetailedItemLevelInfo(itemLink)
         iLvl = actualItemLevel
       end

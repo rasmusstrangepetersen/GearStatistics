@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.1.0";
+REVISION = "11.1.1";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -363,10 +363,10 @@ function updateCurrentPlayerItemList(unit)
         GS.currentPlayer.itemList[GEARLIST[index].name].itemName = TEXT_NO_ITEM_EQUIPPED;
         GS.currentPlayer.itemList[GEARLIST[index].name].itemLink = "";
         GS.currentPlayer.itemList[GEARLIST[index].name].itemRarity = "";
-        GS.currentPlayer.itemList[GEARLIST[index].name].itemLevel = "";
+        GS.currentPlayer.itemList[GEARLIST[index].name].itemLevel = 0;
         GS.currentPlayer.itemList[GEARLIST[index].name].itemType = "";
         GS.currentPlayer.itemList[GEARLIST[index].name].itemSubType = "";
-        GS.currentPlayer.itemList[GEARLIST[index].name].itemScore = "";
+        GS.currentPlayer.itemList[GEARLIST[index].name].itemScore = 0;
         GS.currentPlayer.itemList[GEARLIST[index].name].itemMissingText = "";
         GS.currentPlayer.itemList[GEARLIST[index].name].levelColor = colorBlue;
       end
@@ -375,10 +375,10 @@ function updateCurrentPlayerItemList(unit)
       GS.currentPlayer.itemList[GEARLIST[index].name].itemName = TEXT_NO_ITEM_EQUIPPED;
       GS.currentPlayer.itemList[GEARLIST[index].name].itemLink = "";
       GS.currentPlayer.itemList[GEARLIST[index].name].itemRarity = "";
-      GS.currentPlayer.itemList[GEARLIST[index].name].itemLevel = "";
+      GS.currentPlayer.itemList[GEARLIST[index].name].itemLevel = 0;
       GS.currentPlayer.itemList[GEARLIST[index].name].itemType = "";
       GS.currentPlayer.itemList[GEARLIST[index].name].itemSubType = "";
-      GS.currentPlayer.itemList[GEARLIST[index].name].itemScore = "";
+      GS.currentPlayer.itemList[GEARLIST[index].name].itemScore = 0;
       GS.currentPlayer.itemList[GEARLIST[index].name].itemMissingText = "";
       GS.currentPlayer.itemList[GEARLIST[index].name].levelColor = colorBlue;
     end
@@ -482,7 +482,10 @@ function getItemScore(itemLink)
       end
     end    
   end
-  return score
+  if (not score==nil) then
+    return score
+  end
+  return 0;
 end
 
 -- **************************************************************************

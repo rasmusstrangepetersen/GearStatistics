@@ -38,7 +38,7 @@ end
 -- **************************************************************************
 -- DESC : GearStat event handler
 -- **************************************************************************
-function GS_OnEvent(self, event, a1, ...)
+function GS_OnEvent(self, event, _, ...)
 
   debugMessage("Event: "..event, 0)
 
@@ -140,7 +140,7 @@ end
 -- **************************************************************************
 -- DESC : Update cache after <GS_UpdateDelay> seconds
 -- **************************************************************************
-function GS_OnUpdate(self, elapsed)
+function GS_OnUpdate(_, elapsed)
   debugMessage("Trying to update gear cache", 0);
   
   if (elapsed == nil ) then
@@ -308,9 +308,9 @@ function updateCurrentPlayerItemList(unit)
     GEARLIST[index].id = GetInventorySlotInfo(GEARLIST[index].name);
     local slotLink = GetInventoryItemLink(unit, GEARLIST[index].id);
     if (slotLink ~= nil) then
-      local itemName, itemLink, itemRarity, iLvl, itemMinLevel, itemType, itemSubType = GetItemInfo(slotLink);
+      local itemName, itemLink, itemRarity, iLvl, _, itemType, itemSubType = GetItemInfo(slotLink);
       if(itemLink ~= nil and (itemType == GEARTYPE_ARMOR or itemType == GEARTYPE_WEAPON)) then
-        local actualItemLevel, previewLevel, sparseItemLevel = GetDetailedItemLevelInfo(itemLink)
+        local actualItemLevel, _, _ = GetDetailedItemLevelInfo(itemLink)
         iLvl = actualItemLevel
       end
       local itemScore = 0;
@@ -524,7 +524,6 @@ end
 -- DESC : Get color for tooltip, based on the players average ilvl and the items iLlv
 -- **************************************************************************
 function getLevelColor(itemLevel, playerAverageItemLevel)
-  local color = colorGrey;
 
   if (itemLevel == nil or playerAverageItemLevel == nil) then
     return colorBlue;

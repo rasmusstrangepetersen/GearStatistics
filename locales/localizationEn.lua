@@ -90,6 +90,8 @@ STATTYPE_HASTE = "Haste"
 STATTYPE_BLOCK = "Block"
 STATTYPE_DODGE = "Dodge"
 STATTYPE_AVOID = "Avoidance"
+STATTYPE_LEECH = "Leech"
+
 
 -- *** Legion artifact weapons, dual wield but 1 weapon 
 ARTIFACT_DH_HAVOC = "Twinblades of the Deceiver"

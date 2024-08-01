@@ -72,7 +72,8 @@ STATTYPES = {
     { text = STATTYPE_HASTE },
     { text = STATTYPE_BLOCK },
     { text = STATTYPE_DODGE },
-    { text = STATTYPE_AVOID }
+    { text = STATTYPE_AVOID },
+    { text = STATTYPE_LEECH }
 };
 
 -- *** Legion artifact weapons

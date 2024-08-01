@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.1.1";
+REVISION = "11.1.2";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -345,6 +345,7 @@ function updateCurrentPlayerItemList(unit)
         if(itemLevel > maxItemLevel) then
           maxItemLevel = itemLevel
         end
+        debugMessage("itemName: "..itemName.." - score: "..itemScore, 0)
 
         -- Update cache
         GS.currentPlayer.itemList[GEARLIST[index].name] = {};
@@ -472,20 +473,18 @@ function getItemScore(itemLink)
     debugMessage("debug text: "..text.." - numlines: "..i.."/"..scantip:NumLines(), 0)
 
     for index in ipairs(STATTYPES) do
-      for w in gmatch(text, "([%d,%d-]+) ".. STATTYPES[index].text) do
-        w = gsub(w, ",", "", 1)
-        local num = tonumber(w)
-        if(num) then
-          score = score + num
+      if (string.find(text, STATTYPES[index].text)) then
+        debugMessage("STATTYPE: "..STATTYPES[index].text, 0)
+        local number = string.match(text, "%d+")
+        if not number then
+          number = 0
         end
-        debugMessage("text: "..text.." - w: "..w.." - score: "..score, 0)
+        score = score + number
+        debugMessage("Number: "..number.." - Score: "..score, 0)
       end
-    end    
+    end
   end
-  if (not score==nil) then
-    return score
-  end
-  return 0;
+  return score;
 end
 
 -- **************************************************************************

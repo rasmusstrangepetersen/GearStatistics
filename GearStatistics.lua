@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.1.3";
+REVISION = "11.2.0";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -473,9 +473,14 @@ function getItemScore(itemLink)
     debugMessage("debug text: "..text.." - numlines: "..i.."/"..scantip:NumLines(), 0)
 
     for index in ipairs(STATTYPES) do
-      if (string.find(text, STATTYPES[index].text)) then
-        debugMessage("STATTYPE: "..STATTYPES[index].text, 0)
-        local number = string.match(text, "%d+")
+      local statText = string.match(text, " "..STATTYPES[index].text)
+      if(statText) then
+        debugMessage("STATTYPE: "..STATTYPES[index].text.." - text: "..text, 0)
+        debugMessage("STATTYPE: "..STATTYPES[index].text.." - StatText: "..statText, 0)
+        text = string.gsub(text, statText, "")
+        text = string.gsub(text, "+", "")
+        text = string.gsub(text, ",", "")
+        local number = tonumber(text)
         if not number then
           number = 0
         end

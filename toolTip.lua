@@ -73,11 +73,16 @@ function getTooltipText2(tooltip)
 	  -- calculate gear score
 	  local gearScore =	0
 	  for index in ipairs(STATTYPES) do
-	    local statValue = tonumber(scanTooltip(tooltip, " "..STATTYPES[index].text))
-	    -- in case the scan fails
-	    if (statValue) then
-    	  gearScore = gearScore + statValue
-    	end
+        local statValueText = scanTooltip(tooltip, " "..STATTYPES[index].text)
+        statValueText = string.gsub(statValueText, "+", "")
+        statValueText = string.gsub(statValueText, ",", "")
+        local statValue = tonumber(statValueText)
+        debugMessage("STATTYPE: "..STATTYPES[index].text.." - valuetext: "..statValueText, 0)
+        -- in case the scan fails
+        if (statValue) then
+          debugMessage("statvalue: "..statValue, 0)
+          gearScore = gearScore + statValue
+        end
 	  end
 
 	  -- calculate total item score

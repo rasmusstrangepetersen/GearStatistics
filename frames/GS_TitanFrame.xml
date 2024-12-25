@@ -1,0 +1,19 @@
+<Ui>
+	<GameTooltip name="TitanPanelGearStatTooltip" inherits="GameTooltipTemplate" parent="UIParent" hidden="true"/>
+	<Frame parent="UIParent">
+		<Frames>
+			<Button name="TitanPanelGearStatButton" inherits="TitanPanelComboTemplate" frameStrata="FULLSCREEN" toplevel="true">
+				<Scripts>
+					<OnLoad>
+						TitanPanelGearStatButton_OnLoad(self);
+						TitanPanelButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						TitanPanelGearStatButton_OnClick(self, button);
+						TitanPanelButton_OnClick(self, button);
+					</OnClick>			
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>		
+</Ui>

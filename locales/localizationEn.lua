@@ -2,7 +2,7 @@ if GetLocale() ~= "enUS" then return end -- When adding a new language, remember
 
 -- *** Version information
 VERSION_TEXT = "GearStatistics version: "
-VERSION_RETAIL = " - Dragonflight"
+VERSION_RETAIL = " - The War Within"
 VERSION_CLASSIC = " - Classic SoD"
 VERSION_UNSUPPORTED = " - Unsupported/untested WOW client"
 
@@ -140,3 +140,17 @@ TOOLTIP_TEXTLEFT = "TextLeft"
 GS_TEXT_PLAYER = "player"
 GS_TEXT_UNSAFELINK = "Potentially unsafe link"
 GS_TEXT_DISCONNECT = "you may shift right click to view|nWARNING this may disconnect you from the server!"
+
+-- *** TitanPanel variables
+TITAN_GS_TOOLTIP_TITLE = "Gear Statistics"
+TITAN_GS_LABEL_TEXT = "Gear Score: "
+TITAN_GS_GEAR_CLICK = "Click".."|r ".."to open the main window."
+TITAN_GS_NO = "No"
+TITAN_GS_EQUIPPED = "equipped"
+TITAN_GS_AVERAGE = "Average"
+TITAN_GS_TOTAL = "Total"
+TITAN_GS_SHOW_REGULAR_TEXT = "ShowRegularText"
+TITAN_GS_SHOW_COLORED_TEXT = "ShowColoredText"
+TITAN_GS_LEFT_BUTTON = "LeftButton"
+TITAN_GS_CATEGORY = "Information"
+-- end added

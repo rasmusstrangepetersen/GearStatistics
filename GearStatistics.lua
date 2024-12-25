@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.2.0";
+REVISION = "11.3.0";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -45,6 +45,11 @@ function GS_OnEvent(self, event, _, ...)
   -- Handle events
   if (initialized == true and (event == "PLAYER_EQUIPMENT_CHANGED" or event == "PLAYER_LEVEL_UP")) then
     updateGearScore("player", 0);
+
+    -- For TitanPanel support
+    TitanPanelButton_UpdateButton(TITAN_GS_ID);
+    TitanPanelButton_UpdateTooltip(self);
+
     if (GS_CharFrame:IsVisible()) then
       GS_CharFrame:Hide();
       GS_CharFrame:Show();
@@ -54,13 +59,18 @@ function GS_OnEvent(self, event, _, ...)
     
   if (event == "PLAYER_ENTERING_WORLD") then
     self:UnregisterEvent("PLAYER_ENTERING_WORLD");
-    
+
+    self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
+    self:RegisterEvent("PLAYER_LEVEL_UP");
+    self:RegisterEvent("PLAYER_LOGOUT");
+    self:RegisterEvent("PLAYER_LEAVING_WORLD");
+
     initialise();
     initialized = true;
     return;
   end
 
-  if (event == "PLAYER_LOGOUT") then
+  if (event == "PLAYER_LOGOUT" or event == "PLAYER_LEAVING_WORLD") then
     self:UnregisterEvent("PLAYER_EQUIPMENT_CHANGED");
     self:UnregisterEvent("PLAYER_LEVEL_UP");
       
@@ -74,7 +84,7 @@ end
 -- **************************************************************************
 function initialise()
   debugMessage("Initialising GearStatistics", 0);
-  
+
   -- setup data block
   if (GS == nil) then
     GS = {};
@@ -149,6 +159,11 @@ function GS_OnUpdate(_, elapsed)
   timeCounter = timeCounter + elapsed
   if (timeCounter >= updateDelay and cycleNumber == 0) then
     debugMessage("first update!", 0)
+
+    -- For TitanPanel support
+    TitanPanelButton_UpdateButton(TITAN_GS_ID);
+    TitanPanelButton_UpdateTooltip(self);
+
     timeCounter = 0
     cycleNumber = 1;
   end
@@ -533,15 +548,15 @@ function getLevelColor(itemLevel, playerAverageItemLevel)
     return colorBlue;
   end
 
-  local iLevelDiffPct = 100*(itemLevel-playerAverageItemLevel)/playerAverageItemLevel;
-  debugMessage("iLevelDiffPct: ".. iLevelDiffPct, 0)
+  local iLevelDiff = itemLevel-playerAverageItemLevel;
+  debugMessage("iLevelDiff: ".. iLevelDiff, 0)
 
-  return calculateColor(iLevelDiffPct);
+  return calculateColor(iLevelDiff);
 end
 
 -- **************************************************************************
 -- DESC :Get  color for tooltip, based on the difference in ilvl for the players equipped gear
--- colors and limits for colors defined in variables.lua AVG_GEAR_ILVL_COLOR_LIMIT
+-- colors and limits for colors defined in variables.lua TOTAL_GEAR_ILVL_COLOR_LIMIT
 -- the function is used by TitanGearStatistics
 -- **************************************************************************
 function calculateColor(iLevelDiff)
@@ -551,9 +566,9 @@ function calculateColor(iLevelDiff)
     return colorBlue;
   end
 
-  for index in ipairs(AVG_GEAR_ILVL_COLOR_LIMIT) do
-    if (iLevelDiff > AVG_GEAR_ILVL_COLOR_LIMIT[index].limit) then
-      return AVG_GEAR_ILVL_COLOR_LIMIT[index].color;
+  for index in ipairs(TOTAL_GEAR_ILVL_COLOR_LIMIT) do
+    if (iLevelDiff > TOTAL_GEAR_ILVL_COLOR_LIMIT[index].limit) then
+      return TOTAL_GEAR_ILVL_COLOR_LIMIT[index].color;
     end
   end
 

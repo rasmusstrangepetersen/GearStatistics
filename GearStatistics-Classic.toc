@@ -1,14 +1,12 @@
-## Interface: 11503
-## Title: GearStatistics |cff00aa0011.2.0|r
+## Interface: 11505
+## Title: GearStatistics |cff00aa0011.3.0|r
 ## Notes: Gives a score for your gear and color codes gear based on your equipped gear.
 ## Author: Dornonville
-## Version: 11.2.0
-
+## Version: 11.3.0
 ## IconTexture: Interface\Icons\INV_Chest_Samurai
-
 ## SavedVariables: GS
 ## Dependencies:
-## OptionalDeps:
+## OptionalDeps: TitanClassic
 
 ## X-CompatibleLocales: enUS
 ## X-Category: Tooltip

@@ -33,7 +33,6 @@ function GS_OnLoad(self)
   self:RegisterEvent("PLAYER_LOGOUT");
   self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
   self:RegisterEvent("PLAYER_LEVEL_UP");
-
 end
 
 -- **************************************************************************
@@ -46,10 +45,11 @@ function GS_OnEvent(self, event, _, ...)
   -- Handle events
   if (initialized == true and (event == "PLAYER_EQUIPMENT_CHANGED" or event == "PLAYER_LEVEL_UP")) then
     updateGearScore("player", 0);
-    --added
+
+    -- For TitanPanel support
     TitanPanelButton_UpdateButton(TITAN_GS_ID);
     TitanPanelButton_UpdateTooltip(self);
-    --end added
+
     if (GS_CharFrame:IsVisible()) then
       GS_CharFrame:Hide();
       GS_CharFrame:Show();
@@ -59,6 +59,7 @@ function GS_OnEvent(self, event, _, ...)
     
   if (event == "PLAYER_ENTERING_WORLD") then
     self:UnregisterEvent("PLAYER_ENTERING_WORLD");
+
     self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
     self:RegisterEvent("PLAYER_LEVEL_UP");
     self:RegisterEvent("PLAYER_LOGOUT");
@@ -158,10 +159,11 @@ function GS_OnUpdate(_, elapsed)
   timeCounter = timeCounter + elapsed
   if (timeCounter >= updateDelay and cycleNumber == 0) then
     debugMessage("first update!", 0)
-    -- added
+
+    -- For TitanPanel support
     TitanPanelButton_UpdateButton(TITAN_GS_ID);
     TitanPanelButton_UpdateTooltip(self);
-    -- end added
+
     timeCounter = 0
     cycleNumber = 1;
   end
@@ -546,12 +548,10 @@ function getLevelColor(itemLevel, playerAverageItemLevel)
     return colorBlue;
   end
 
-  local iLevelDiffPct = 100*(itemLevel-playerAverageItemLevel)/playerAverageItemLevel;
   local iLevelDiff = itemLevel-playerAverageItemLevel;
-  debugMessage("iLevelDiffPct: ".. iLevelDiffPct, 0)
+  debugMessage("iLevelDiff: ".. iLevelDiff, 0)
 
   return calculateColor(iLevelDiff);
---fPct);
 end
 
 -- **************************************************************************

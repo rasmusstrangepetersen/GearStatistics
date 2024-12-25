@@ -6,8 +6,10 @@
 	<Script file="toolTip.lua"/>
 	<Script file="GearStatistics.lua"/>
 	<Script file="GS_CharFrame.lua"/>
+	<Script file="titanpanel.lua"/>
 
 	<Include file="frames\GS_Frame.xml"/>
 	<Include file="frames\GS_CharFrame.xml"/>
 	<Include file="frames\GS_CharFrameGear.xml"/>
+	<Include file="frames\GS_TitanFrame.xml"/>
 </Ui>

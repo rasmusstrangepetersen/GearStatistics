@@ -111,12 +111,11 @@ TWOHAND_WEAPONS = {
     { text = TWOHAND_FISHING_POLES }
 };
 
--- iLevel difference in percentage - mapped to shown color
+-- iLevel difference in ilevels - mapped to shown color
 -- table must be ordered descending by limit for the function to work correctly
-AVG_GEAR_ILVL_COLOR_LIMIT = {
-    { color= colorGold,     limit=15 },
-    { color= colorPurple,   limit=9 },
-    { color= colorDarkBlue, limit=3 },
-    { color= colorGreen,    limit=-3 },
-    { color= colorWhite,    limit=-9 }
+TOTAL_GEAR_ILVL_COLOR_LIMIT = {
+    { color= colorPurple,   limit=10 },
+    { color= colorDarkBlue, limit=5 },
+    { color= colorGreen,    limit=-5 },
+    { color= colorWhite,    limit=-10 }
 };

@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.3.0";
+REVISION = "11.3.1";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug

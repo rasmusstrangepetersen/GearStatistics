@@ -1,8 +1,10 @@
 --- Tables and colors used in the code
 
--- *** Active version
+-- *** Active version ***
 if GSaddOn.isRetail then
     VERSION_WOWVERSION = VERSION_RETAIL
+elseif GSaddOn.isVanilla then
+    VERSION_WOWVERSION = VERSION_VANILLA
 elseif GSaddOn.isClassic then
     VERSION_WOWVERSION = VERSION_CLASSIC
 else

@@ -1,5 +1,5 @@
 -- *** Version information
-REVISION = "11.3.1";
+REVISION = "11.3.2";
 
 -- *** Local variables
 local showDebug = 0; -- 1 = show debugs in general chat, 0 turns off debug
@@ -243,8 +243,8 @@ end
 -- DESC : Update currentPlayers professions
 -- **************************************************************************
 function updateCurrentPlayerProfessions(unit)
-  --- TODO fix professions for classic
-  if(GSaddOn.isClassic) then
+  --- TODO fix professions for vanilla and classic
+  if(GSaddOn.isVanilla or GSaddOn.isClassic) then
     return
   end
 

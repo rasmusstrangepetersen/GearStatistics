@@ -3,7 +3,8 @@ if GetLocale() ~= "enUS" then return end -- When adding a new language, remember
 -- *** Version information
 VERSION_TEXT = "GearStatistics version: "
 VERSION_RETAIL = " - The War Within"
-VERSION_CLASSIC = " - Classic SoD"
+VERSION_VANILLA = " - Classic Vanilla/SoD"
+VERSION_CLASSIC = " - Classic Mist of Pandaria"
 VERSION_UNSUPPORTED = " - Unsupported/untested WOW client"
 
 -- *** AddOn information - chat messages

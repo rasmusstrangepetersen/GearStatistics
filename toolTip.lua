@@ -16,8 +16,8 @@ function hookTooltips()
 
   if GSaddOn.isRetail then
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, addGearstatToTooltip)
-  elseif GSaddOn.isClassic then
-    --- TODO fix classic tooltip, for know make titan plugin work
+  elseif (GSaddOn.isVanilla or GSaddOn.isClassic) then
+    --- TODO fix vanilla and classic tooltip, for now make titan plugin work
     GameTooltip:HookScript("OnShow", GS_Tooltip_OnShow);
   -- GameTooltip:HookScript("OnTooltipSetItem", GS_Tooltip_OnGameTooltipSetItem)
     GameTooltip:HookScript("OnHide", GS_Tooltip_OnHide)

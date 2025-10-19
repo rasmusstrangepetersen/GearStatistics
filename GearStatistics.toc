@@ -1,8 +1,8 @@
-## Interface: 110200, 11507, 50500
-## Title: GearStatistics |cff00aa0011.3.2|r
+## Interface: 110205, 11507, 50501
+## Title: GearStatistics |cff00aa0011.3.3|r
 ## Notes: Gives a score for your gear and color codes gear based on your equipped gear, with native TitanPanel support
 ## Author: Dornonville
-## Version: 11.3.2
+## Version: 11.3.3
 ## IconTexture: Interface\Icons\INV_Chest_Samurai
 ## SavedVariables: GS
 ## Dependencies:

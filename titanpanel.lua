@@ -27,13 +27,14 @@ function TitanPanelGearStatButton_OnLoad(self)
             ShowLabelText = true,
             ShowRegularText = true,
             ShowColoredText = true,
-            DisplayOnRightSide = false,
+            DisplayOnRightSide = true,
         },
         savedVariables = {
             ShowIcon = 1,
             ShowLabelText = 1,
             ShowRegularText = 1,
             ShowColoredText = 1,
+            DisplayOnRightSide = 0,
         }
     };
 
